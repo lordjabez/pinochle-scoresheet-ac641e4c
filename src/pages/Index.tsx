@@ -4,11 +4,20 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Team {
   name: string;
   score: number;
   rounds: number[];
+}
+
+interface Round {
+  team1Score: number;
+  team2Score: number;
+  bid: number;
+  bidWinner: "team1" | "team2";
+  trump: "hearts" | "diamonds" | "clubs" | "spades";
 }
 
 const Index = () => {
@@ -24,10 +33,25 @@ const Index = () => {
   });
   const [roundScore1, setRoundScore1] = useState<string>("");
   const [roundScore2, setRoundScore2] = useState<string>("");
+  const [currentBid, setCurrentBid] = useState<string>("");
+  const [bidWinner, setBidWinner] = useState<"team1" | "team2">("team1");
+  const [trump, setTrump] = useState<"hearts" | "diamonds" | "clubs" | "spades">("hearts");
+  const [rounds, setRounds] = useState<Round[]>([]);
 
   const addRound = () => {
     const score1 = parseInt(roundScore1) || 0;
     const score2 = parseInt(roundScore2) || 0;
+    const bid = parseInt(currentBid) || 0;
+
+    const newRound: Round = {
+      team1Score: score1,
+      team2Score: score2,
+      bid,
+      bidWinner,
+      trump,
+    };
+
+    setRounds([...rounds, newRound]);
 
     setTeam1({
       ...team1,
@@ -43,6 +67,7 @@ const Index = () => {
 
     setRoundScore1("");
     setRoundScore2("");
+    setCurrentBid("");
   };
 
   return (
@@ -98,6 +123,39 @@ const Index = () => {
           </Card>
         </div>
 
+        {/* Bid Controls */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Input
+            type="number"
+            value={currentBid}
+            onChange={(e) => setCurrentBid(e.target.value)}
+            placeholder="Bid amount"
+            className="bg-green-700 border-green-600 text-white"
+          />
+          
+          <Select value={bidWinner} onValueChange={(value: "team1" | "team2") => setBidWinner(value)}>
+            <SelectTrigger className="bg-green-700 border-green-600 text-white">
+              <SelectValue placeholder="Bid winner" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="team1">{team1.name}</SelectItem>
+              <SelectItem value="team2">{team2.name}</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={trump} onValueChange={(value: "hearts" | "diamonds" | "clubs" | "spades") => setTrump(value)}>
+            <SelectTrigger className="bg-green-700 border-green-600 text-white">
+              <SelectValue placeholder="Trump suit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="hearts">Hearts ♥</SelectItem>
+              <SelectItem value="diamonds">Diamonds ♦</SelectItem>
+              <SelectItem value="clubs">Clubs ♣</SelectItem>
+              <SelectItem value="spades">Spades ♠</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         {/* Add Round Button */}
         <div className="mt-6 flex justify-center">
           <Button
@@ -115,37 +173,24 @@ const Index = () => {
             Round History
           </h2>
           <Card className="p-4 bg-green-800 border-yellow-300/20">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-300 mb-2">
-                  {team1.name}
-                </h3>
-                <div className="space-y-2">
-                  {team1.rounds.map((score, index) => (
-                    <div
-                      key={index}
-                      className="bg-green-700 p-2 rounded text-white"
-                    >
-                      Round {index + 1}: {score}
-                    </div>
-                  ))}
+            <div className="space-y-4">
+              {rounds.map((round, index) => (
+                <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-green-700 rounded">
+                  <div>
+                    <p className="text-yellow-300 font-semibold mb-1">
+                      {team1.name}: {round.team1Score}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-yellow-300 font-semibold mb-1">
+                      {team2.name}: {round.team2Score}
+                    </p>
+                  </div>
+                  <div className="col-span-2 text-white text-sm">
+                    Bid: {round.bid} by {round[`${round.bidWinner}Name`]} • Trump: {round.trump}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-300 mb-2">
-                  {team2.name}
-                </h3>
-                <div className="space-y-2">
-                  {team2.rounds.map((score, index) => (
-                    <div
-                      key={index}
-                      className="bg-green-700 p-2 rounded text-white"
-                    >
-                      Round {index + 1}: {score}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </Card>
         </div>
