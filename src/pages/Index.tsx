@@ -13,8 +13,10 @@ interface Team {
 }
 
 interface Round {
-  team1Score: number;
-  team2Score: number;
+  team1Meld: number;
+  team1Tricks: number;
+  team2Meld: number;
+  team2Tricks: number;
   bid: number;
   bidWinner: "team1" | "team2";
   trump: "hearts" | "diamonds" | "clubs" | "spades";
@@ -31,21 +33,27 @@ const Index = () => {
     score: 0,
     rounds: [],
   });
-  const [roundScore1, setRoundScore1] = useState<string>("");
-  const [roundScore2, setRoundScore2] = useState<string>("");
+  const [team1Meld, setTeam1Meld] = useState<string>("");
+  const [team1Tricks, setTeam1Tricks] = useState<string>("");
+  const [team2Meld, setTeam2Meld] = useState<string>("");
+  const [team2Tricks, setTeam2Tricks] = useState<string>("");
   const [currentBid, setCurrentBid] = useState<string>("");
   const [bidWinner, setBidWinner] = useState<"team1" | "team2">("team1");
   const [trump, setTrump] = useState<"hearts" | "diamonds" | "clubs" | "spades">("hearts");
   const [rounds, setRounds] = useState<Round[]>([]);
 
   const addRound = () => {
-    const score1 = parseInt(roundScore1) || 0;
-    const score2 = parseInt(roundScore2) || 0;
+    const meld1 = parseInt(team1Meld) || 0;
+    const tricks1 = parseInt(team1Tricks) || 0;
+    const meld2 = parseInt(team2Meld) || 0;
+    const tricks2 = parseInt(team2Tricks) || 0;
     const bid = parseInt(currentBid) || 0;
 
     const newRound: Round = {
-      team1Score: score1,
-      team2Score: score2,
+      team1Meld: meld1,
+      team1Tricks: tricks1,
+      team2Meld: meld2,
+      team2Tricks: tricks2,
       bid,
       bidWinner,
       trump,
@@ -55,18 +63,20 @@ const Index = () => {
 
     setTeam1({
       ...team1,
-      score: team1.score + score1,
-      rounds: [...team1.rounds, score1],
+      score: team1.score + meld1 + tricks1,
+      rounds: [...team1.rounds, meld1 + tricks1],
     });
 
     setTeam2({
       ...team2,
-      score: team2.score + score2,
-      rounds: [...team2.rounds, score2],
+      score: team2.score + meld2 + tricks2,
+      rounds: [...team2.rounds, meld2 + tricks2],
     });
 
-    setRoundScore1("");
-    setRoundScore2("");
+    setTeam1Meld("");
+    setTeam1Tricks("");
+    setTeam2Meld("");
+    setTeam2Tricks("");
     setCurrentBid("");
   };
 
@@ -90,13 +100,22 @@ const Index = () => {
               <div className="text-4xl font-bold text-center text-yellow-300">
                 {team1.score}
               </div>
-              <Input
-                type="number"
-                value={roundScore1}
-                onChange={(e) => setRoundScore1(e.target.value)}
-                placeholder="Enter round score"
-                className="bg-green-700 border-green-600 text-white"
-              />
+              <div className="grid grid-cols-2 gap-2">
+                <Input
+                  type="number"
+                  value={team1Meld}
+                  onChange={(e) => setTeam1Meld(e.target.value)}
+                  placeholder="Meld points"
+                  className="bg-green-700 border-green-600 text-white"
+                />
+                <Input
+                  type="number"
+                  value={team1Tricks}
+                  onChange={(e) => setTeam1Tricks(e.target.value)}
+                  placeholder="Trick points"
+                  className="bg-green-700 border-green-600 text-white"
+                />
+              </div>
             </div>
           </Card>
 
@@ -112,13 +131,22 @@ const Index = () => {
               <div className="text-4xl font-bold text-center text-yellow-300">
                 {team2.score}
               </div>
-              <Input
-                type="number"
-                value={roundScore2}
-                onChange={(e) => setRoundScore2(e.target.value)}
-                placeholder="Enter round score"
-                className="bg-green-700 border-green-600 text-white"
-              />
+              <div className="grid grid-cols-2 gap-2">
+                <Input
+                  type="number"
+                  value={team2Meld}
+                  onChange={(e) => setTeam2Meld(e.target.value)}
+                  placeholder="Meld points"
+                  className="bg-green-700 border-green-600 text-white"
+                />
+                <Input
+                  type="number"
+                  value={team2Tricks}
+                  onChange={(e) => setTeam2Tricks(e.target.value)}
+                  placeholder="Trick points"
+                  className="bg-green-700 border-green-600 text-white"
+                />
+              </div>
             </div>
           </Card>
         </div>
@@ -178,16 +206,22 @@ const Index = () => {
                 <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-green-700 rounded">
                   <div>
                     <p className="text-yellow-300 font-semibold mb-1">
-                      {team1.name}: {round.team1Score}
+                      {team1.name}
+                    </p>
+                    <p className="text-white text-sm">
+                      Meld: {round.team1Meld} • Tricks: {round.team1Tricks}
                     </p>
                   </div>
                   <div>
                     <p className="text-yellow-300 font-semibold mb-1">
-                      {team2.name}: {round.team2Score}
+                      {team2.name}
+                    </p>
+                    <p className="text-white text-sm">
+                      Meld: {round.team2Meld} • Tricks: {round.team2Tricks}
                     </p>
                   </div>
                   <div className="col-span-2 text-white text-sm">
-                    Bid: {round.bid} by {round[`${round.bidWinner}Name`]} • Trump: {round.trump}
+                    Bid: {round.bid} by {round.bidWinner === "team1" ? team1.name : team2.name} • Trump: {round.trump}
                   </div>
                 </div>
               ))}
