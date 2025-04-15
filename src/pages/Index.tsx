@@ -71,18 +71,27 @@ const Index = () => {
       trump,
     };
 
+    // Calculate round score based on bid success/failure
+    const biddingTeamPoints = bidWinner === "team1" ? (meld1 + tricks1) : (meld2 + tricks2);
+    const team1RoundScore = bidWinner === "team1" 
+      ? (biddingTeamPoints >= bid ? meld1 + tricks1 : -bid)
+      : (meld1 + tricks1);
+    const team2RoundScore = bidWinner === "team2"
+      ? (biddingTeamPoints >= bid ? meld2 + tricks2 : -bid)
+      : (meld2 + tricks2);
+
     setRounds([...rounds, newRound]);
 
     setTeam1({
       ...team1,
-      score: team1.score + meld1 + tricks1,
-      rounds: [...team1.rounds, meld1 + tricks1],
+      score: team1.score + team1RoundScore,
+      rounds: [...team1.rounds, team1RoundScore],
     });
 
     setTeam2({
       ...team2,
-      score: team2.score + meld2 + tricks2,
-      rounds: [...team2.rounds, meld2 + tricks2],
+      score: team2.score + team2RoundScore,
+      rounds: [...team2.rounds, team2RoundScore],
     });
 
     setTeam1Meld("");
