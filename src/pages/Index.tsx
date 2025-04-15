@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Team {
   name: string;
@@ -42,11 +42,23 @@ const Index = () => {
   const [trump, setTrump] = useState<"hearts" | "diamonds" | "clubs" | "spades">("hearts");
   const [rounds, setRounds] = useState<Round[]>([]);
 
+  const { toast } = useToast();
+
   const addRound = () => {
-    const meld1 = parseInt(team1Meld) || 0;
     const tricks1 = parseInt(team1Tricks) || 0;
-    const meld2 = parseInt(team2Meld) || 0;
     const tricks2 = parseInt(team2Tricks) || 0;
+    
+    if (tricks1 + tricks2 !== 25) {
+      toast({
+        title: "Invalid trick points",
+        description: "Trick points must add up to 25",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const meld1 = parseInt(team1Meld) || 0;
+    const meld2 = parseInt(team2Meld) || 0;
     const bid = parseInt(currentBid) || 0;
 
     const newRound: Round = {
