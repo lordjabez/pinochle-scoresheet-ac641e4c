@@ -106,7 +106,7 @@ const Index = () => {
     <div className="min-h-screen bg-green-900 p-2 sm:p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold text-center text-yellow-300 mb-4 sm:mb-8">
-          Pinochle Score Keeper
+          Pinochle Scoresheet
         </h1>
 
         <div className="grid grid-cols-1 gap-4 sm:gap-6">
