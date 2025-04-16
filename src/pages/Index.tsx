@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -102,23 +103,23 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-green-900 p-4 sm:p-8">
+    <div className="min-h-screen bg-green-900 p-2 sm:p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-yellow-300 mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center text-yellow-300 mb-4 sm:mb-8">
           Pinochle Score Keeper
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6">
           {/* Team 1 Score Card */}
-          <Card className="p-6 bg-green-800 border-yellow-300/20">
-            <div className="space-y-4">
+          <Card className="p-4 sm:p-6 bg-green-800 border-yellow-300/20">
+            <div className="space-y-3 sm:space-y-4">
               <Input
                 type="text"
                 value={team1.name}
                 onChange={(e) => setTeam1({ ...team1, name: e.target.value })}
-                className="text-lg font-semibold bg-green-700 border-green-600 text-white"
+                className="text-base sm:text-lg font-semibold bg-green-700 border-green-600 text-white"
               />
-              <div className="text-4xl font-bold text-center text-yellow-300">
+              <div className="text-3xl sm:text-4xl font-bold text-center text-yellow-300">
                 {team1.score}
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -141,15 +142,15 @@ const Index = () => {
           </Card>
 
           {/* Team 2 Score Card */}
-          <Card className="p-6 bg-green-800 border-yellow-300/20">
-            <div className="space-y-4">
+          <Card className="p-4 sm:p-6 bg-green-800 border-yellow-300/20">
+            <div className="space-y-3 sm:space-y-4">
               <Input
                 type="text"
                 value={team2.name}
                 onChange={(e) => setTeam2({ ...team2, name: e.target.value })}
-                className="text-lg font-semibold bg-green-700 border-green-600 text-white"
+                className="text-base sm:text-lg font-semibold bg-green-700 border-green-600 text-white"
               />
-              <div className="text-4xl font-bold text-center text-yellow-300">
+              <div className="text-3xl sm:text-4xl font-bold text-center text-yellow-300">
                 {team2.score}
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -173,7 +174,7 @@ const Index = () => {
         </div>
 
         {/* Bid Controls */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
           <Input
             type="number"
             value={currentBid}
@@ -206,10 +207,10 @@ const Index = () => {
         </div>
 
         {/* Add Round Button */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-4 sm:mt-6 flex justify-center">
           <Button
             onClick={addRound}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
+            className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
           >
             <Plus size={20} />
             Add Round
@@ -217,19 +218,19 @@ const Index = () => {
         </div>
 
         {/* Round History */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold text-yellow-300 mb-4">
+        <div className="mt-6 sm:mt-8">
+          <h2 className="text-xl sm:text-2xl font-semibold text-yellow-300 mb-3 sm:mb-4">
             Round History
           </h2>
-          <Card className="p-4 bg-green-800 border-yellow-300/20">
-            <div className="space-y-4">
+          <Card className="p-3 sm:p-4 bg-green-800 border-yellow-300/20">
+            <div className="space-y-3 sm:space-y-4">
               {rounds.map((round, index) => (
-                <div key={index} className="grid grid-cols-2 gap-4 p-3 bg-green-700 rounded">
+                <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-green-700 rounded text-sm sm:text-base">
                   <div>
                     <p className="text-yellow-300 font-semibold mb-1">
                       {team1.name}
                     </p>
-                    <p className="text-white text-sm">
+                    <p className="text-white">
                       Meld: {round.team1Meld} • Tricks: {round.team1Tricks}
                     </p>
                   </div>
@@ -237,11 +238,11 @@ const Index = () => {
                     <p className="text-yellow-300 font-semibold mb-1">
                       {team2.name}
                     </p>
-                    <p className="text-white text-sm">
+                    <p className="text-white">
                       Meld: {round.team2Meld} • Tricks: {round.team2Tricks}
                     </p>
                   </div>
-                  <div className="col-span-2 text-white text-sm">
+                  <div className="col-span-1 sm:col-span-2 text-white">
                     Bid: {round.bid} by {round.bidWinner === "team1" ? team1.name : team2.name} • Trump: {round.trump}
                   </div>
                 </div>
