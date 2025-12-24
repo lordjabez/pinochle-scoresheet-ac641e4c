@@ -41,7 +41,7 @@ const Index = () => {
     if (bid < 15) {
       toast({
         title: "Invalid bid",
-        description: "Bid must be 15 or greater",
+        description: "Bid must be at least 15",
         variant: "destructive",
       });
       return;
