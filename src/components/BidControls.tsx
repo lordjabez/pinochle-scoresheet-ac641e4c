@@ -1,4 +1,3 @@
-
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Team } from "@/types";
@@ -25,18 +24,18 @@ export const BidControls = ({
   onTrumpChange,
 }: BidControlsProps) => {
   return (
-    <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+    <div className="mt-2 sm:mt-4 grid grid-cols-3 gap-2">
       <Input
         type="number"
         value={currentBid}
         onChange={(e) => onBidChange(e.target.value)}
-        placeholder="Bid amount"
-        className="bg-green-700 border-green-600 text-white"
+        placeholder="Bid"
+        className="bg-green-700 border-green-600 text-white h-8 text-sm"
       />
       
       <Select value={bidWinner} onValueChange={onBidWinnerChange}>
-        <SelectTrigger className="bg-green-700 border-green-600 text-white">
-          <SelectValue placeholder="Bid winner" />
+        <SelectTrigger className="bg-green-700 border-green-600 text-white h-8 text-sm">
+          <SelectValue placeholder="Winner" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="team1">{team1.name}</SelectItem>
@@ -45,8 +44,8 @@ export const BidControls = ({
       </Select>
 
       <Select value={trump} onValueChange={onTrumpChange}>
-        <SelectTrigger className="bg-green-700 border-green-600 text-white">
-          <SelectValue placeholder="Trump suit" />
+        <SelectTrigger className="bg-green-700 border-green-600 text-white h-8 text-sm">
+          <SelectValue placeholder="Trump" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="hearts"><span className="text-red-500">♥</span> Hearts</SelectItem>

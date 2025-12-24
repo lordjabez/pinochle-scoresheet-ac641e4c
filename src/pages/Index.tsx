@@ -142,16 +142,16 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-green-900 p-2 sm:p-8">
+    <div className="min-h-screen bg-green-900 p-2 sm:p-4">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-4 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-yellow-300">
-            Pinochle Scoresheet
+        <div className="flex items-center justify-between mb-2 sm:mb-4">
+          <h1 className="text-xl sm:text-3xl font-bold text-yellow-300">
+            Pinochle
           </h1>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2">
-                <RotateCcw size={18} />
+              <Button size="sm" className="bg-yellow-600 hover:bg-yellow-700 text-white gap-1 h-8 text-sm">
+                <RotateCcw size={14} />
                 New Game
               </Button>
             </AlertDialogTrigger>
@@ -170,7 +170,7 @@ const Index = () => {
           </AlertDialog>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4">
           <TeamScoreCard
             team={team1}
             meldPoints={team1Meld}
@@ -200,20 +200,22 @@ const Index = () => {
           onTrumpChange={setTrump}
         />
 
-        <div className="mt-4 sm:mt-6 flex justify-center gap-3">
+        <div className="mt-2 sm:mt-4 flex justify-center gap-2">
           <Button
+            size="sm"
             onClick={undoLastHand}
             disabled={hands.length === 0}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-1 h-8 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Undo2 size={20} />
-            Undo Hand
+            <Undo2 size={14} />
+            Undo
           </Button>
           <Button
+            size="sm"
             onClick={finishHand}
-            className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
+            className="flex-1 sm:flex-none bg-yellow-600 hover:bg-yellow-700 text-white gap-1 h-8 text-sm"
           >
-            <Plus size={20} />
+            <Plus size={14} />
             Finish Hand
           </Button>
         </div>

@@ -1,4 +1,3 @@
-
 import { Team } from "@/types";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -21,33 +20,33 @@ export const TeamScoreCard = ({
   onTricksChange,
 }: TeamScoreCardProps) => {
   return (
-    <Card className="p-4 sm:p-6 bg-green-800 border-yellow-300/20">
-      <div className="space-y-3 sm:space-y-4">
+    <Card className="p-2 sm:p-4 bg-green-800 border-yellow-300/20">
+      <div className="flex items-center gap-2 mb-2">
         <Input
           type="text"
           value={team.name}
           onChange={(e) => onTeamChange({ ...team, name: e.target.value })}
-          className="text-base sm:text-lg font-semibold bg-green-700 border-green-600 text-white"
+          className="text-sm sm:text-base font-semibold bg-green-700 border-green-600 text-white h-8 flex-1"
         />
-        <div className="text-3xl sm:text-4xl font-bold text-center text-yellow-300">
+        <div className="text-2xl sm:text-3xl font-bold text-yellow-300 min-w-[60px] text-center">
           {team.score}
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <Input
-            type="number"
-            value={meldPoints}
-            onChange={(e) => onMeldChange(e.target.value)}
-            placeholder="Meld points"
-            className="bg-green-700 border-green-600 text-white"
-          />
-          <Input
-            type="number"
-            value={tricksPoints}
-            onChange={(e) => onTricksChange(e.target.value)}
-            placeholder="Trick points"
-            className="bg-green-700 border-green-600 text-white"
-          />
-        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <Input
+          type="number"
+          value={meldPoints}
+          onChange={(e) => onMeldChange(e.target.value)}
+          placeholder="Meld"
+          className="bg-green-700 border-green-600 text-white h-8 text-sm"
+        />
+        <Input
+          type="number"
+          value={tricksPoints}
+          onChange={(e) => onTricksChange(e.target.value)}
+          placeholder="Tricks"
+          className="bg-green-700 border-green-600 text-white h-8 text-sm"
+        />
       </div>
     </Card>
   );
