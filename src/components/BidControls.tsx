@@ -49,10 +49,10 @@ export const BidControls = ({
           <SelectValue placeholder="Trump suit" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="hearts">Hearts ♥</SelectItem>
-          <SelectItem value="diamonds">Diamonds ♦</SelectItem>
-          <SelectItem value="clubs">Clubs ♣</SelectItem>
-          <SelectItem value="spades">Spades ♠</SelectItem>
+          <SelectItem value="hearts"><span className="text-red-500">♥</span> Hearts</SelectItem>
+          <SelectItem value="diamonds"><span className="text-red-500">♦</span> Diamonds</SelectItem>
+          <SelectItem value="clubs">♣ Clubs</SelectItem>
+          <SelectItem value="spades">♠ Spades</SelectItem>
         </SelectContent>
       </Select>
     </div>
