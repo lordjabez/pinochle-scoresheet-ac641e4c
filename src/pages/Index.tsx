@@ -194,8 +194,7 @@ const Index = () => {
           <Button
             onClick={undoLastRound}
             disabled={rounds.length === 0}
-            variant="outline"
-            className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-green-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Undo2 size={20} />
             Undo Round
