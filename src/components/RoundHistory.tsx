@@ -12,7 +12,7 @@ export const RoundHistory = ({ rounds, team1, team2 }: RoundHistoryProps) => {
   return (
     <div className="mt-6 sm:mt-8">
       <h2 className="text-xl sm:text-2xl font-semibold text-yellow-300 mb-3 sm:mb-4">
-        Hand History
+        Previous Hands
       </h2>
       <Card className="p-3 sm:p-4 bg-green-800 border-yellow-300/20">
         <div className="space-y-3 sm:space-y-4">
