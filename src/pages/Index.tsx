@@ -38,6 +38,15 @@ const Index = () => {
     const meld2 = parseInt(team2Meld) || 0;
     const bid = parseInt(currentBid) || 0;
 
+    if (bid < 15) {
+      toast({
+        title: "Invalid bid",
+        description: "Bid must be 15 or greater",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const newRound: Round = {
       team1Meld: meld1,
       team1Tricks: tricks1,
