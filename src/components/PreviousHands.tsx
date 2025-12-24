@@ -8,33 +8,25 @@ interface PreviousHandsProps {
 }
 
 export const PreviousHands = ({ hands, team1, team2 }: PreviousHandsProps) => {
+  if (hands.length === 0) return null;
+  
   return (
-    <div className="mt-6 sm:mt-8">
-      <h2 className="text-xl sm:text-2xl font-semibold text-yellow-300 mb-3 sm:mb-4">
+    <div className="mt-3 sm:mt-4">
+      <h2 className="text-sm sm:text-base font-semibold text-yellow-300 mb-2">
         Previous Hands
       </h2>
-      <Card className="p-3 sm:p-4 bg-green-800 border-yellow-300/20">
-        <div className="space-y-3 sm:space-y-4">
+      <Card className="p-2 sm:p-3 bg-green-800 border-yellow-300/20">
+        <div className="space-y-2">
           {hands.map((hand, index) => (
-            <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-green-700 rounded text-sm sm:text-base">
-              <div>
-                <p className="text-yellow-300 font-semibold mb-1">
-                  {team1.name}
-                </p>
-                <p className="text-white">
-                  Meld: {hand.team1Meld} • Tricks: {hand.team1Tricks}
-                </p>
+            <div key={index} className="grid grid-cols-2 gap-2 p-2 bg-green-700 rounded text-xs sm:text-sm">
+              <div className="text-white">
+                <span className="text-yellow-300 font-medium">{team1.name}:</span> {hand.team1Meld}m + {hand.team1Tricks}t
               </div>
-              <div>
-                <p className="text-yellow-300 font-semibold mb-1">
-                  {team2.name}
-                </p>
-                <p className="text-white">
-                  Meld: {hand.team2Meld} • Tricks: {hand.team2Tricks}
-                </p>
+              <div className="text-white">
+                <span className="text-yellow-300 font-medium">{team2.name}:</span> {hand.team2Meld}m + {hand.team2Tricks}t
               </div>
-              <div className="col-span-1 sm:col-span-2 text-white">
-                Bid: {hand.bid} by {hand.bidWinner === "team1" ? team1.name : team2.name} • Trump: {hand.trump}
+              <div className="col-span-2 text-white/70 text-xs">
+                Bid {hand.bid} by {hand.bidWinner === "team1" ? team1.name : team2.name} • {hand.trump}
               </div>
             </div>
           ))}
