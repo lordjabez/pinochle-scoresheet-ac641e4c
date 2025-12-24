@@ -22,6 +22,17 @@ const Index = () => {
   const { toast } = useToast();
 
   const addRound = () => {
+    const bid = parseInt(currentBid) || 0;
+
+    if (bid < 15) {
+      toast({
+        title: "Invalid bid",
+        description: "Bid must be at least 15",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const tricks1 = parseInt(team1Tricks) || 0;
     const tricks2 = parseInt(team2Tricks) || 0;
     
@@ -36,16 +47,6 @@ const Index = () => {
 
     const meld1 = parseInt(team1Meld) || 0;
     const meld2 = parseInt(team2Meld) || 0;
-    const bid = parseInt(currentBid) || 0;
-
-    if (bid < 15) {
-      toast({
-        title: "Invalid bid",
-        description: "Bid must be at least 15",
-        variant: "destructive",
-      });
-      return;
-    }
 
     const newRound: Round = {
       team1Meld: meld1,
