@@ -4,7 +4,7 @@ import { Plus, RotateCcw, Undo2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { TeamScoreCard } from "@/components/TeamScoreCard";
 import { BidControls } from "@/components/BidControls";
-import { HandHistory } from "@/components/HandHistory";
+import { PreviousHands } from "@/components/PreviousHands";
 import { Hand } from "@/types";
 import { useGameState } from "@/hooks/useGameState";
 import {
@@ -218,7 +218,7 @@ const Index = () => {
           </Button>
         </div>
 
-        <HandHistory hands={hands} team1={team1} team2={team2} />
+        <PreviousHands hands={hands} team1={team1} team2={team2} />
       </div>
     </div>
   );

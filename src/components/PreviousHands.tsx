@@ -1,13 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Hand, Team } from "@/types";
 
-interface HandHistoryProps {
+interface PreviousHandsProps {
   hands: Hand[];
   team1: Team;
   team2: Team;
 }
 
-export const HandHistory = ({ hands, team1, team2 }: HandHistoryProps) => {
+export const PreviousHands = ({ hands, team1, team2 }: PreviousHandsProps) => {
   return (
     <div className="mt-6 sm:mt-8">
       <h2 className="text-xl sm:text-2xl font-semibold text-yellow-300 mb-3 sm:mb-4">
