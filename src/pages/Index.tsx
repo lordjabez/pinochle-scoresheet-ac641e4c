@@ -105,10 +105,9 @@ const Index = () => {
           </h1>
           <Button
             onClick={resetGame}
-            variant="outline"
-            className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-green-900"
+            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
           >
-            <RotateCcw size={18} className="mr-2" />
+            <RotateCcw size={18} />
             New Game
           </Button>
         </div>
