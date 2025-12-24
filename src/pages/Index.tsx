@@ -102,8 +102,18 @@ const Index = () => {
   const undoLastRound = () => {
     if (rounds.length === 0) return;
 
+    const lastRound = rounds[rounds.length - 1];
     const lastTeam1Score = team1.rounds[team1.rounds.length - 1];
     const lastTeam2Score = team2.rounds[team2.rounds.length - 1];
+
+    // Populate form fields with the undone round's values
+    setTeam1Meld(lastRound.team1Meld.toString());
+    setTeam1Tricks(lastRound.team1Tricks.toString());
+    setTeam2Meld(lastRound.team2Meld.toString());
+    setTeam2Tricks(lastRound.team2Tricks.toString());
+    setCurrentBid(lastRound.bid.toString());
+    setBidWinner(lastRound.bidWinner);
+    setTrump(lastRound.trump);
 
     setRounds(rounds.slice(0, -1));
     setTeam1({
@@ -119,7 +129,7 @@ const Index = () => {
 
     toast({
       title: "Round undone",
-      description: "The last round has been removed.",
+      description: "The last round values have been restored for editing.",
     });
   };
 
