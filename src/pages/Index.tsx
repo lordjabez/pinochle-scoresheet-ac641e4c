@@ -4,8 +4,8 @@ import { Plus, RotateCcw, Undo2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { TeamScoreCard } from "@/components/TeamScoreCard";
 import { BidControls } from "@/components/BidControls";
-import { RoundHistory } from "@/components/RoundHistory";
-import { Round } from "@/types";
+import { HandHistory } from "@/components/HandHistory";
+import { Hand } from "@/types";
 import { useGameState } from "@/hooks/useGameState";
 import {
   AlertDialog,
@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const Index = () => {
-  const { team1, setTeam1, team2, setTeam2, rounds, setRounds, resetGame, isLoaded } = useGameState();
+  const { team1, setTeam1, team2, setTeam2, hands, setHands, resetGame, isLoaded } = useGameState();
   
   const [team1Meld, setTeam1Meld] = useState<string>("");
   const [team1Tricks, setTeam1Tricks] = useState<string>("");
@@ -32,7 +32,7 @@ const Index = () => {
 
   const { toast } = useToast();
 
-  const addRound = () => {
+  const finishHand = () => {
     const bid = parseInt(currentBid) || 0;
 
     if (bid < 15) {
@@ -59,7 +59,7 @@ const Index = () => {
     const meld1 = parseInt(team1Meld) || 0;
     const meld2 = parseInt(team2Meld) || 0;
 
-    const newRound: Round = {
+    const newHand: Hand = {
       team1Meld: meld1,
       team1Tricks: tricks1,
       team2Meld: meld2,
@@ -69,27 +69,27 @@ const Index = () => {
       trump,
     };
 
-    // Calculate round score based on bid success/failure
+    // Calculate hand score based on bid success/failure
     const biddingTeamPoints = bidWinner === "team1" ? (meld1 + tricks1) : (meld2 + tricks2);
-    const team1RoundScore = bidWinner === "team1" 
+    const team1HandScore = bidWinner === "team1" 
       ? (biddingTeamPoints >= bid ? meld1 + tricks1 : -bid)
       : (meld1 + tricks1);
-    const team2RoundScore = bidWinner === "team2"
+    const team2HandScore = bidWinner === "team2"
       ? (biddingTeamPoints >= bid ? meld2 + tricks2 : -bid)
       : (meld2 + tricks2);
 
-    setRounds([...rounds, newRound]);
+    setHands([...hands, newHand]);
 
     setTeam1({
       ...team1,
-      score: team1.score + team1RoundScore,
-      rounds: [...team1.rounds, team1RoundScore],
+      score: team1.score + team1HandScore,
+      hands: [...team1.hands, team1HandScore],
     });
 
     setTeam2({
       ...team2,
-      score: team2.score + team2RoundScore,
-      rounds: [...team2.rounds, team2RoundScore],
+      score: team2.score + team2HandScore,
+      hands: [...team2.hands, team2HandScore],
     });
 
     setTeam1Meld("");
@@ -99,32 +99,32 @@ const Index = () => {
     setCurrentBid("");
   };
 
-  const undoLastRound = () => {
-    if (rounds.length === 0) return;
+  const undoLastHand = () => {
+    if (hands.length === 0) return;
 
-    const lastRound = rounds[rounds.length - 1];
-    const lastTeam1Score = team1.rounds[team1.rounds.length - 1];
-    const lastTeam2Score = team2.rounds[team2.rounds.length - 1];
+    const lastHand = hands[hands.length - 1];
+    const lastTeam1Score = team1.hands[team1.hands.length - 1];
+    const lastTeam2Score = team2.hands[team2.hands.length - 1];
 
-    // Populate form fields with the undone round's values
-    setTeam1Meld(lastRound.team1Meld.toString());
-    setTeam1Tricks(lastRound.team1Tricks.toString());
-    setTeam2Meld(lastRound.team2Meld.toString());
-    setTeam2Tricks(lastRound.team2Tricks.toString());
-    setCurrentBid(lastRound.bid.toString());
-    setBidWinner(lastRound.bidWinner);
-    setTrump(lastRound.trump);
+    // Populate form fields with the undone hand's values
+    setTeam1Meld(lastHand.team1Meld.toString());
+    setTeam1Tricks(lastHand.team1Tricks.toString());
+    setTeam2Meld(lastHand.team2Meld.toString());
+    setTeam2Tricks(lastHand.team2Tricks.toString());
+    setCurrentBid(lastHand.bid.toString());
+    setBidWinner(lastHand.bidWinner);
+    setTrump(lastHand.trump);
 
-    setRounds(rounds.slice(0, -1));
+    setHands(hands.slice(0, -1));
     setTeam1({
       ...team1,
       score: team1.score - lastTeam1Score,
-      rounds: team1.rounds.slice(0, -1),
+      hands: team1.hands.slice(0, -1),
     });
     setTeam2({
       ...team2,
       score: team2.score - lastTeam2Score,
-      rounds: team2.rounds.slice(0, -1),
+      hands: team2.hands.slice(0, -1),
     });
 
     toast({
@@ -159,7 +159,7 @@ const Index = () => {
               <AlertDialogHeader>
                 <AlertDialogTitle>Start New Game?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This will reset all scores and round history. This action cannot be undone.
+                  This will reset all scores and hand history. This action cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -202,15 +202,15 @@ const Index = () => {
 
         <div className="mt-4 sm:mt-6 flex justify-center gap-3">
           <Button
-            onClick={undoLastRound}
-            disabled={rounds.length === 0}
+            onClick={undoLastHand}
+            disabled={hands.length === 0}
             className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Undo2 size={20} />
             Undo Hand
           </Button>
           <Button
-            onClick={addRound}
+            onClick={finishHand}
             className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
           >
             <Plus size={20} />
@@ -218,7 +218,7 @@ const Index = () => {
           </Button>
         </div>
 
-        <RoundHistory rounds={rounds} team1={team1} team2={team2} />
+        <HandHistory hands={hands} team1={team1} team2={team2} />
       </div>
     </div>
   );
