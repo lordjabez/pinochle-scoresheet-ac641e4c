@@ -26,10 +26,21 @@ export const useGameState = () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
-        const parsed: GameState = JSON.parse(saved);
-        setTeam1(parsed.team1);
-        setTeam2(parsed.team2);
-        setHands(parsed.hands);
+        const parsed = JSON.parse(saved);
+        // Migrate from old "rounds" property to "hands"
+        const migratedTeam1 = {
+          ...parsed.team1,
+          hands: parsed.team1.hands || parsed.team1.rounds || [],
+        };
+        const migratedTeam2 = {
+          ...parsed.team2,
+          hands: parsed.team2.hands || parsed.team2.rounds || [],
+        };
+        const migratedHands = parsed.hands || parsed.rounds || [];
+        
+        setTeam1(migratedTeam1);
+        setTeam2(migratedTeam2);
+        setHands(migratedHands);
       } catch (e) {
         console.error("Failed to parse saved game state:", e);
       }
