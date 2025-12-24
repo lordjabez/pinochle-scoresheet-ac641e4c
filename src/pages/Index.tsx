@@ -128,8 +128,8 @@ const Index = () => {
     });
 
     toast({
-      title: "Round undone",
-      description: "The last round values have been restored for editing.",
+      title: "Hand undone",
+      description: "The last hand values have been restored for editing.",
     });
   };
 
@@ -207,14 +207,14 @@ const Index = () => {
             className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Undo2 size={20} />
-            Undo Round
+            Undo Hand
           </Button>
           <Button
             onClick={addRound}
             className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
           >
             <Plus size={20} />
-            Add Round
+            Finish Hand
           </Button>
         </div>
 
