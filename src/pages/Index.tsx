@@ -7,6 +7,17 @@ import { BidControls } from "@/components/BidControls";
 import { RoundHistory } from "@/components/RoundHistory";
 import { Round } from "@/types";
 import { useGameState } from "@/hooks/useGameState";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Index = () => {
   const { team1, setTeam1, team2, setTeam2, rounds, setRounds, resetGame, isLoaded } = useGameState();
@@ -103,13 +114,26 @@ const Index = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-yellow-300">
             Pinochle Scoresheet
           </h1>
-          <Button
-            onClick={resetGame}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
-          >
-            <RotateCcw size={18} />
-            New Game
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="bg-yellow-600 hover:bg-yellow-700 text-white gap-2">
+                <RotateCcw size={18} />
+                New Game
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Start New Game?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will reset all scores and round history. This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={resetGame}>Start New Game</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:gap-6">
