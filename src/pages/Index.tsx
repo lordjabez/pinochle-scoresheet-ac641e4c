@@ -1,24 +1,16 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, RotateCcw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { TeamScoreCard } from "@/components/TeamScoreCard";
 import { BidControls } from "@/components/BidControls";
 import { RoundHistory } from "@/components/RoundHistory";
-import { Team, Round } from "@/types";
+import { Round } from "@/types";
+import { useGameState } from "@/hooks/useGameState";
 
 const Index = () => {
-  const [team1, setTeam1] = useState<Team>({
-    name: "Team 1",
-    score: 0,
-    rounds: [],
-  });
-  const [team2, setTeam2] = useState<Team>({
-    name: "Team 2",
-    score: 0,
-    rounds: [],
-  });
+  const { team1, setTeam1, team2, setTeam2, rounds, setRounds, resetGame, isLoaded } = useGameState();
+  
   const [team1Meld, setTeam1Meld] = useState<string>("");
   const [team1Tricks, setTeam1Tricks] = useState<string>("");
   const [team2Meld, setTeam2Meld] = useState<string>("");
@@ -26,7 +18,6 @@ const Index = () => {
   const [currentBid, setCurrentBid] = useState<string>("");
   const [bidWinner, setBidWinner] = useState<"team1" | "team2">("team1");
   const [trump, setTrump] = useState<"hearts" | "diamonds" | "clubs" | "spades">("hearts");
-  const [rounds, setRounds] = useState<Round[]>([]);
 
   const { toast } = useToast();
 
@@ -87,12 +78,30 @@ const Index = () => {
     setCurrentBid("");
   };
 
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-green-900 flex items-center justify-center">
+        <div className="text-yellow-300 text-xl">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-green-900 p-2 sm:p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-bold text-center text-yellow-300 mb-4 sm:mb-8">
-          Pinochle Scoresheet
-        </h1>
+        <div className="flex items-center justify-between mb-4 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-yellow-300">
+            Pinochle Scoresheet
+          </h1>
+          <Button
+            onClick={resetGame}
+            variant="outline"
+            className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-green-900"
+          >
+            <RotateCcw size={18} className="mr-2" />
+            New Game
+          </Button>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 sm:gap-6">
           <TeamScoreCard
