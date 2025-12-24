@@ -2,10 +2,10 @@
 export interface Team {
   name: string;
   score: number;
-  rounds: number[];
+  hands: number[];
 }
 
-export interface Round {
+export interface Hand {
   team1Meld: number;
   team1Tricks: number;
   team2Meld: number;
