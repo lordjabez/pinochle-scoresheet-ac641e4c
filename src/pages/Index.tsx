@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, RotateCcw } from "lucide-react";
+import { Plus, RotateCcw, Undo2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { TeamScoreCard } from "@/components/TeamScoreCard";
 import { BidControls } from "@/components/BidControls";
@@ -99,6 +99,30 @@ const Index = () => {
     setCurrentBid("");
   };
 
+  const undoLastRound = () => {
+    if (rounds.length === 0) return;
+
+    const lastTeam1Score = team1.rounds[team1.rounds.length - 1];
+    const lastTeam2Score = team2.rounds[team2.rounds.length - 1];
+
+    setRounds(rounds.slice(0, -1));
+    setTeam1({
+      ...team1,
+      score: team1.score - lastTeam1Score,
+      rounds: team1.rounds.slice(0, -1),
+    });
+    setTeam2({
+      ...team2,
+      score: team2.score - lastTeam2Score,
+      rounds: team2.rounds.slice(0, -1),
+    });
+
+    toast({
+      title: "Round undone",
+      description: "The last round has been removed.",
+    });
+  };
+
   if (!isLoaded) {
     return (
       <div className="min-h-screen bg-green-900 flex items-center justify-center">
@@ -166,7 +190,16 @@ const Index = () => {
           onTrumpChange={setTrump}
         />
 
-        <div className="mt-4 sm:mt-6 flex justify-center">
+        <div className="mt-4 sm:mt-6 flex justify-center gap-3">
+          <Button
+            onClick={undoLastRound}
+            disabled={rounds.length === 0}
+            variant="outline"
+            className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-green-900 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Undo2 size={20} />
+            Undo Round
+          </Button>
           <Button
             onClick={addRound}
             className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white gap-2"
