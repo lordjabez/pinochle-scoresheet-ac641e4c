@@ -80,13 +80,17 @@ const Index = () => {
     };
 
     // Calculate hand score based on bid success/failure
-    const biddingTeamPoints = bidWinner === "team1" ? (meld1 + tricks1) : (meld2 + tricks2);
+    // If a team gets 0 tricks, they lose their meld too
+    const team1Effective = tricks1 === 0 ? 0 : meld1 + tricks1;
+    const team2Effective = tricks2 === 0 ? 0 : meld2 + tricks2;
+    
+    const biddingTeamPoints = bidWinner === "team1" ? team1Effective : team2Effective;
     const team1HandScore = bidWinner === "team1" 
-      ? (biddingTeamPoints >= bid ? meld1 + tricks1 : -bid)
-      : (meld1 + tricks1);
+      ? (biddingTeamPoints >= bid ? team1Effective : -bid)
+      : team1Effective;
     const team2HandScore = bidWinner === "team2"
-      ? (biddingTeamPoints >= bid ? meld2 + tricks2 : -bid)
-      : (meld2 + tricks2);
+      ? (biddingTeamPoints >= bid ? team2Effective : -bid)
+      : team2Effective;
 
     setHands([...hands, newHand]);
 
