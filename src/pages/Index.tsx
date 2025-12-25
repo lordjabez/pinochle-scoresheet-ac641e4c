@@ -146,7 +146,7 @@ const Index = () => {
   if (!isLoaded) {
     return (
       <div className="min-h-screen bg-green-900 flex items-center justify-center">
-        <div className="text-yellow-300 text-xl">Loading...</div>
+        <div className="text-amber-400 text-xl">Loading...</div>
       </div>
     );
   }
@@ -155,12 +155,12 @@ const Index = () => {
     <div className="min-h-screen bg-green-900 p-2 sm:p-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-2 sm:mb-4">
-          <h1 className="text-xl sm:text-3xl font-bold text-yellow-300">
+          <h1 className="text-xl sm:text-3xl font-bold text-amber-400">
             Pinochle
           </h1>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button size="sm" className="bg-yellow-600 hover:bg-yellow-700 text-white gap-1 h-8 text-sm">
+              <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-green-900 font-semibold gap-1 h-8 text-sm">
                 <RotateCcw size={14} />
                 New Game
               </Button>
@@ -215,7 +215,7 @@ const Index = () => {
             size="sm"
             onClick={undoLastHand}
             disabled={hands.length === 0}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white gap-1 h-8 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-amber-500 hover:bg-amber-600 text-green-900 font-semibold gap-1 h-8 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Undo2 size={14} />
             Undo
@@ -223,7 +223,7 @@ const Index = () => {
           <Button
             size="sm"
             onClick={finishHand}
-            className="flex-1 sm:flex-none bg-yellow-600 hover:bg-yellow-700 text-white gap-1 h-8 text-sm"
+            className="flex-1 sm:flex-none bg-amber-500 hover:bg-amber-600 text-green-900 font-semibold gap-1 h-8 text-sm"
           >
             <Plus size={14} />
             Finish Hand

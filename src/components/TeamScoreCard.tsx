@@ -20,7 +20,7 @@ export const TeamScoreCard = ({
   onTricksChange,
 }: TeamScoreCardProps) => {
   return (
-    <Card className="p-2 sm:p-4 bg-green-800 border-yellow-300/20">
+    <Card className="p-2 sm:p-4 bg-green-800 border-amber-400/20">
       <div className="flex items-center gap-2 mb-2">
         <Input
           type="text"
@@ -28,7 +28,7 @@ export const TeamScoreCard = ({
           onChange={(e) => onTeamChange({ ...team, name: e.target.value })}
           className="text-sm sm:text-base font-semibold bg-green-700 border-green-600 text-white h-8 flex-1"
         />
-        <div className="text-2xl sm:text-3xl font-bold text-yellow-300 min-w-[60px] text-center">
+        <div className="text-2xl sm:text-3xl font-bold text-amber-400 min-w-[60px] text-center">
           {team.score}
         </div>
       </div>
