@@ -164,7 +164,7 @@ const Index = () => {
           </h1>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button size="sm" className="bg-amber-400 hover:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm">
+              <Button size="sm" className="bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-400 text-green-900 font-semibold gap-1 h-8 text-sm">
                 <RotateCcw size={14} />
                 New Game
               </Button>
@@ -219,7 +219,7 @@ const Index = () => {
             size="sm"
             onClick={undoLastHand}
             disabled={hands.length === 0}
-            className="bg-amber-400 hover:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm disabled:bg-amber-400/50 disabled:text-green-900/50 disabled:cursor-not-allowed disabled:opacity-100"
+            className="bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-400 text-green-900 font-semibold gap-1 h-8 text-sm disabled:bg-amber-400/50 disabled:text-green-900/50 disabled:cursor-not-allowed disabled:opacity-100"
           >
             <Undo2 size={14} />
             Undo
@@ -227,7 +227,7 @@ const Index = () => {
           <Button
             size="sm"
             onClick={finishHand}
-            className="flex-1 sm:flex-none bg-amber-400 hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm focus-visible:ring-amber-500"
+            className="flex-1 sm:flex-none bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-400 text-green-900 font-semibold gap-1 h-8 text-sm focus-visible:ring-amber-500"
           >
             <Plus size={14} />
             Finish Hand
