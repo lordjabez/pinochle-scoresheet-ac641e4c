@@ -30,6 +30,22 @@ const Index = () => {
   const [bidWinner, setBidWinner] = useState<"team1" | "team2">("team1");
   const [trump, setTrump] = useState<"hearts" | "diamonds" | "clubs" | "spades">("hearts");
 
+  const handleTeam1TricksChange = (value: string) => {
+    setTeam1Tricks(value);
+    const num = parseInt(value);
+    if (!isNaN(num) && num >= 0 && num <= 25) {
+      setTeam2Tricks((25 - num).toString());
+    }
+  };
+
+  const handleTeam2TricksChange = (value: string) => {
+    setTeam2Tricks(value);
+    const num = parseInt(value);
+    if (!isNaN(num) && num >= 0 && num <= 25) {
+      setTeam1Tricks((25 - num).toString());
+    }
+  };
+
   const { toast } = useToast();
 
   const finishHand = () => {
@@ -191,7 +207,7 @@ const Index = () => {
             tricksPoints={team1Tricks}
             onTeamChange={setTeam1}
             onMeldChange={setTeam1Meld}
-            onTricksChange={setTeam1Tricks}
+            onTricksChange={handleTeam1TricksChange}
           />
           <TeamScoreCard
             team={team2}
@@ -199,7 +215,7 @@ const Index = () => {
             tricksPoints={team2Tricks}
             onTeamChange={setTeam2}
             onMeldChange={setTeam2Meld}
-            onTricksChange={setTeam2Tricks}
+            onTricksChange={handleTeam2TricksChange}
           />
         </div>
 
