@@ -219,7 +219,7 @@ const Index = () => {
             size="sm"
             onClick={undoLastHand}
             disabled={hands.length === 0}
-            className="bg-amber-400 hover:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-amber-400 hover:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm disabled:bg-amber-400/50 disabled:text-green-900/50 disabled:cursor-not-allowed disabled:opacity-100"
           >
             <Undo2 size={14} />
             Undo
