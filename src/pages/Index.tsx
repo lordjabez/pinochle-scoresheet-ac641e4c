@@ -46,18 +46,28 @@ const Index = () => {
 
     const tricks1 = parseInt(team1Tricks) || 0;
     const tricks2 = parseInt(team2Tricks) || 0;
+    const meld1 = parseInt(team1Meld) || 0;
+    const meld2 = parseInt(team2Meld) || 0;
     
-    if (tricks1 + tricks2 !== 25) {
+    // Check if bid is impossible to make (gap between bid and meld > 25)
+    const bidderMeld = bidWinner === "team1" ? meld1 : meld2;
+    const bidImpossible = bid - bidderMeld > 25;
+    
+    // Allow 0-0 tricks if bid is impossible, otherwise must sum to 25
+    const validTricks = bidImpossible 
+      ? (tricks1 === 0 && tricks2 === 0) || (tricks1 + tricks2 === 25)
+      : tricks1 + tricks2 === 25;
+    
+    if (!validTricks) {
       toast({
         title: "Invalid trick points",
-        description: "Trick points must add up to 25",
+        description: bidImpossible 
+          ? "Trick points must add up to 25, or both be 0 if bid is impossible" 
+          : "Trick points must add up to 25",
         variant: "destructive",
       });
       return;
     }
-
-    const meld1 = parseInt(team1Meld) || 0;
-    const meld2 = parseInt(team2Meld) || 0;
 
     const newHand: Hand = {
       team1Meld: meld1,
