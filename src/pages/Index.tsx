@@ -227,7 +227,7 @@ const Index = () => {
           <Button
             size="sm"
             onClick={finishHand}
-            className="flex-1 sm:flex-none bg-amber-400 hover:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm"
+            className="flex-1 sm:flex-none bg-amber-400 hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-500 text-green-900 font-semibold gap-1 h-8 text-sm focus-visible:ring-amber-500"
           >
             <Plus size={14} />
             Finish Hand
