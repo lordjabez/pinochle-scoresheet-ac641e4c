@@ -20,6 +20,8 @@ const buttonVariants = cva(
         ghost:
           "bg-transparent text-foreground hover:bg-transparent hover:text-foreground active:bg-transparent active:text-foreground focus:bg-transparent focus:text-foreground focus-visible:bg-transparent focus-visible:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        "no-press-effect":
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground active:bg-primary active:text-primary-foreground active:opacity-100 active:filter-none focus:bg-primary focus:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground [&]:active:opacity-100 [&]:active:brightness-100 [&]:active:contrast-100 [-webkit-filter:none]",
       },
       size: {
         default: "h-10 px-4 py-2",
