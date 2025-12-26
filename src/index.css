@@ -93,6 +93,7 @@
 @layer base {
   html {
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 
   * {
@@ -103,12 +104,42 @@
   button,
   [type="button"],
   [type="submit"],
-  [type="reset"] {
+  [type="reset"],
+  a,
+  [role="button"] {
     -webkit-appearance: none;
     appearance: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Opt-out utilities for selectable/input content */
+@layer utilities {
+  .allow-select {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+  }
+
+  .allow-callout {
+    -webkit-touch-callout: default;
+  }
+
+  .allow-tap-highlight {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .ios-input-safe {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+    -webkit-appearance: none;
+    appearance: none;
   }
 }
