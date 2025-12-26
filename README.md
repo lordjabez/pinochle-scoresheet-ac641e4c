@@ -74,6 +74,7 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-trick
 
 ## To-Do / Notes
 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ] Check domain names for consistent handling
+- [ ] Disable finish hand if it can't be done
+- [ ] Check numeric inputs on iOS and Android
+- [ ] Rework UI to use collapsible panes and game phases
