@@ -5,13 +5,14 @@ import { Team } from "@/types";
 
 interface BiddingPhaseProps {
   bid: number;
-  bidWinner: string | null;
+  bidWinnerTeam: "team1" | "team2" | null;
+  bidWinnerPlayerIndex: 0 | 1 | null;
   trump: "hearts" | "diamonds" | "clubs" | "spades" | null;
   team1: Team;
   team2: Team;
   handNumber: number;
   onBidChange: (value: number) => void;
-  onBidWinnerChange: (playerName: string, team: "team1" | "team2") => void;
+  onBidWinnerChange: (playerIndex: 0 | 1, team: "team1" | "team2") => void;
   onTrumpChange: (value: "hearts" | "diamonds" | "clubs" | "spades") => void;
 }
 
@@ -24,7 +25,8 @@ const suits = [
 
 export const BiddingPhase = ({
   bid,
-  bidWinner,
+  bidWinnerTeam,
+  bidWinnerPlayerIndex,
   trump,
   team1,
   team2,
@@ -35,11 +37,15 @@ export const BiddingPhase = ({
 }: BiddingPhaseProps) => {
   // All 4 players for bid winner selection
   const players = [
-    { name: team1.players[0], team: "team1" as const },
-    { name: team1.players[1], team: "team1" as const },
-    { name: team2.players[0], team: "team2" as const },
-    { name: team2.players[1], team: "team2" as const },
+    { name: team1.players[0], team: "team1" as const, playerIndex: 0 as const },
+    { name: team1.players[1], team: "team1" as const, playerIndex: 1 as const },
+    { name: team2.players[0], team: "team2" as const, playerIndex: 0 as const },
+    { name: team2.players[1], team: "team2" as const, playerIndex: 1 as const },
   ];
+
+  const isSelected = (team: "team1" | "team2", playerIndex: 0 | 1) => {
+    return bidWinnerTeam === team && bidWinnerPlayerIndex === playerIndex;
+  };
 
   return (
     <div className="flex flex-col items-center gap-4 py-4">
@@ -47,8 +53,11 @@ export const BiddingPhase = ({
         handNumber={handNumber}
         phase="Bidding"
         bid={bid}
-        bidWinner={bidWinner}
+        bidWinnerTeam={bidWinnerTeam}
+        bidWinnerPlayerIndex={bidWinnerPlayerIndex}
         trump={trump}
+        team1={team1}
+        team2={team2}
       />
       
       {/* Bid Value */}
@@ -67,11 +76,11 @@ export const BiddingPhase = ({
         <div className="grid grid-cols-2 gap-2">
           {players.map((player) => (
             <Button
-              key={`${player.team}-${player.name}`}
+              key={`${player.team}-${player.playerIndex}`}
               type="button"
-              onClick={() => onBidWinnerChange(player.name, player.team)}
+              onClick={() => onBidWinnerChange(player.playerIndex, player.team)}
               className={`w-[8rem] h-10 font-semibold transition-colors ${
-                bidWinner === player.name
+                isSelected(player.team, player.playerIndex)
                   ? "bg-amber-400 text-green-900 [@media(hover:hover)]:hover:bg-amber-500"
                   : "bg-green-700 text-white border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
               }`}

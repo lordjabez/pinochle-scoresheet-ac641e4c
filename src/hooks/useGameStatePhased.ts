@@ -7,7 +7,7 @@ export type GamePhase = "bidding" | "meld" | "tricks";
 
 interface HandInProgress {
   bid: number;
-  bidWinner: string | null; // Player name
+  bidWinnerPlayerIndex: 0 | 1 | null; // Player index within the team
   bidWinnerTeam: "team1" | "team2" | null;
   trump: "hearts" | "diamonds" | "clubs" | "spades" | null;
   team1Meld: number;
@@ -27,7 +27,7 @@ const defaultTeam2: Team = { players: ["Player 3", "Player 4"], score: 0, hands:
 
 const defaultHandInProgress: HandInProgress = {
   bid: 15,
-  bidWinner: null,
+  bidWinnerPlayerIndex: null,
   bidWinnerTeam: null,
   trump: null,
   team1Meld: 0,
@@ -114,7 +114,7 @@ export const useGameStatePhased = () => {
   const isBiddingValid = useCallback(() => {
     return (
       currentHand.bid >= 15 &&
-      currentHand.bidWinner !== null &&
+      currentHand.bidWinnerPlayerIndex !== null &&
       currentHand.bidWinnerTeam !== null &&
       currentHand.trump !== null
     );
@@ -124,7 +124,6 @@ export const useGameStatePhased = () => {
     return currentHand.team1Tricks + currentHand.team2Tricks === 25;
   }, [currentHand]);
 
-  // Calculate hand score and commit
   const commitHand = useCallback(() => {
     const hand: Hand = {
       team1Meld: currentHand.team1Meld,
@@ -132,7 +131,7 @@ export const useGameStatePhased = () => {
       team2Meld: currentHand.team2Meld,
       team2Tricks: currentHand.team2Tricks,
       bid: currentHand.bid,
-      bidWinner: currentHand.bidWinner!,
+      bidWinnerPlayerIndex: currentHand.bidWinnerPlayerIndex!,
       bidWinnerTeam: currentHand.bidWinnerTeam!,
       trump: currentHand.trump!,
     };
@@ -194,7 +193,7 @@ export const useGameStatePhased = () => {
       // Load the hand data for editing
       setCurrentHand({
         bid: lastHand.bid,
-        bidWinner: lastHand.bidWinner,
+        bidWinnerPlayerIndex: lastHand.bidWinnerPlayerIndex,
         bidWinnerTeam: lastHand.bidWinnerTeam,
         trump: lastHand.trump,
         team1Meld: lastHand.team1Meld,

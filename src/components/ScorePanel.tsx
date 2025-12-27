@@ -100,7 +100,7 @@ export const ScorePanel = ({
                       {hand.team2Meld}m + {hand.team2Tricks}t
                     </div>
                     <div className="col-span-2 text-white/70 text-xs">
-                      Bid {hand.bid} by {hand.bidWinner} •{" "}
+                      Bid {hand.bid} by {hand.bidWinnerTeam === "team1" ? team1.players[hand.bidWinnerPlayerIndex] : team2.players[hand.bidWinnerPlayerIndex]} •{" "}
                       {hand.trump}
                     </div>
                   </div>

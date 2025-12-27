@@ -9,7 +9,8 @@ interface MeldPhaseProps {
   team2: Team;
   handNumber: number;
   bid: number;
-  bidWinner: string;
+  bidWinnerTeam: "team1" | "team2";
+  bidWinnerPlayerIndex: 0 | 1;
   trump: "hearts" | "diamonds" | "clubs" | "spades";
   onTeam1MeldChange: (value: number) => void;
   onTeam2MeldChange: (value: number) => void;
@@ -22,7 +23,8 @@ export const MeldPhase = ({
   team2,
   handNumber,
   bid,
-  bidWinner,
+  bidWinnerTeam,
+  bidWinnerPlayerIndex,
   trump,
   onTeam1MeldChange,
   onTeam2MeldChange,
@@ -33,8 +35,11 @@ export const MeldPhase = ({
         handNumber={handNumber}
         phase="Meld"
         bid={bid}
-        bidWinner={bidWinner}
+        bidWinnerTeam={bidWinnerTeam}
+        bidWinnerPlayerIndex={bidWinnerPlayerIndex}
         trump={trump}
+        team1={team1}
+        team2={team2}
       />
       
       <div className="grid grid-cols-2 gap-8 w-full max-w-md">
