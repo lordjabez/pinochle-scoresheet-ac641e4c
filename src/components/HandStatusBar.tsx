@@ -40,7 +40,7 @@ export const HandStatusBar = ({
   const winnerName = getWinnerName();
   
   return (
-    <div className="flex items-center justify-center gap-4 py-2 px-3 bg-green-700 rounded-lg text-sm w-full">
+    <div className="flex items-center justify-center gap-4 py-2 px-3 bg-green-700 rounded-lg text-sm w-full h-10">
       <span className="text-white font-medium">
         Hand {handNumber} - {phase}
       </span>
