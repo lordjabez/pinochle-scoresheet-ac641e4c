@@ -36,7 +36,6 @@ const Index = () => {
     displayHand,
     updateCurrentHand,
     updateTeam1Tricks,
-    isViewingHistory,
     getCurrentHandNumber,
     isBidImpossible,
   } = useGameStatePhased();
@@ -99,7 +98,6 @@ const Index = () => {
         <div className="text-center mb-2">
           <span className="text-sm text-white/70">
             Hand {getCurrentHandNumber()}
-            {isViewingHistory && " (Viewing History)"}
           </span>
           {phase === "meld" && isBidImpossible() && (
             <div className="text-amber-400 text-xs mt-1">
