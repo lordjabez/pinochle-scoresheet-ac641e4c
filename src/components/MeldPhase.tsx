@@ -1,4 +1,5 @@
 import { NumberStepper } from "@/components/NumberStepper";
+import { HandStatusBar } from "@/components/HandStatusBar";
 import { Team } from "@/types";
 
 interface MeldPhaseProps {
@@ -6,6 +7,10 @@ interface MeldPhaseProps {
   team2Meld: number;
   team1: Team;
   team2: Team;
+  handNumber: number;
+  bid: number;
+  bidWinner: string;
+  trump: "hearts" | "diamonds" | "clubs" | "spades";
   onTeam1MeldChange: (value: number) => void;
   onTeam2MeldChange: (value: number) => void;
 }
@@ -15,11 +20,22 @@ export const MeldPhase = ({
   team2Meld,
   team1,
   team2,
+  handNumber,
+  bid,
+  bidWinner,
+  trump,
   onTeam1MeldChange,
   onTeam2MeldChange,
 }: MeldPhaseProps) => {
   return (
-    <div className="flex flex-col items-center gap-6 py-4">
+    <div className="flex flex-col items-center gap-4 py-4">
+      <HandStatusBar
+        handNumber={handNumber}
+        bid={bid}
+        bidWinner={bidWinner}
+        trump={trump}
+      />
+      
       <h2 className="text-xl font-bold text-amber-400">Meld</h2>
       
       <div className="grid grid-cols-2 gap-8 w-full max-w-md">
