@@ -45,12 +45,11 @@ export const BiddingPhase = ({
     <div className="flex flex-col items-center gap-4 py-4">
       <HandStatusBar
         handNumber={handNumber}
+        phase="Bidding"
         bid={bid}
         bidWinner={bidWinner}
         trump={trump}
       />
-      
-      <h2 className="text-xl font-bold text-amber-400">Bidding</h2>
       
       {/* Bid Value */}
       <NumberStepper
