@@ -70,7 +70,7 @@ export const BiddingPhase = ({
               key={`${player.team}-${player.name}`}
               type="button"
               onClick={() => onBidWinnerChange(player.name, player.team)}
-              className={`w-32 h-10 font-semibold transition-colors ${
+              className={`w-[7.5rem] h-10 font-semibold transition-colors ${
                 bidWinner === player.name
                   ? "bg-amber-400 text-green-900 [@media(hover:hover)]:hover:bg-amber-500"
                   : "bg-green-700 text-white border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
