@@ -43,7 +43,7 @@ export const HandStatusBar = ({
         <>
           <span className="text-white/40">•</span>
           <span className="text-white/70">Trump</span>
-          <span className={`text-lg ${suit.color} bg-white rounded px-1`}>
+          <span className={`text-lg ${suit.color} bg-white rounded w-6 inline-flex justify-center`}>
             {suit.symbol}
           </span>
         </>
