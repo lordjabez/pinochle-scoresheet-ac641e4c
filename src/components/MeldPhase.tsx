@@ -31,12 +31,11 @@ export const MeldPhase = ({
     <div className="flex flex-col items-center gap-4 py-4">
       <HandStatusBar
         handNumber={handNumber}
+        phase="Meld"
         bid={bid}
         bidWinner={bidWinner}
         trump={trump}
       />
-      
-      <h2 className="text-xl font-bold text-amber-400">Meld</h2>
       
       <div className="grid grid-cols-2 gap-8 w-full max-w-md">
         <NumberStepper

@@ -34,12 +34,11 @@ export const TricksPhase = ({
     <div className="flex flex-col items-center gap-4 py-4">
       <HandStatusBar
         handNumber={handNumber}
+        phase="Tricks"
         bid={bid}
         bidWinner={bidWinner}
         trump={trump}
       />
-      
-      <h2 className="text-xl font-bold text-amber-400">Tricks</h2>
       
       <div className="text-sm text-white/70 text-center">
         Total must equal 25
