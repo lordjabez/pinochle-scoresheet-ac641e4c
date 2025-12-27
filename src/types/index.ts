@@ -11,7 +11,7 @@ export interface Hand {
   team2Meld: number;
   team2Tricks: number;
   bid: number;
-  bidWinner: string; // Player name who won the bid
+  bidWinnerPlayerIndex: 0 | 1; // Index of player within the team who won the bid
   bidWinnerTeam: "team1" | "team2"; // Which team the bid winner is on
   trump: "hearts" | "diamonds" | "clubs" | "spades";
 }

@@ -98,20 +98,21 @@ const Index = () => {
         {phase === "bidding" && (
           <BiddingPhase
             bid={displayHand.bid}
-            bidWinner={displayHand.bidWinner}
+            bidWinnerTeam={displayHand.bidWinnerTeam}
+            bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
             trump={displayHand.trump}
             team1={team1}
             team2={team2}
             handNumber={getCurrentHandNumber()}
             onBidChange={(value) => updateCurrentHand({ bid: value })}
-            onBidWinnerChange={(playerName, team) =>
-              updateCurrentHand({ bidWinner: playerName, bidWinnerTeam: team })
+            onBidWinnerChange={(playerIndex, team) =>
+              updateCurrentHand({ bidWinnerPlayerIndex: playerIndex, bidWinnerTeam: team })
             }
             onTrumpChange={(value) => updateCurrentHand({ trump: value })}
           />
         )}
 
-        {phase === "meld" && displayHand.bidWinner && displayHand.trump && (
+        {phase === "meld" && displayHand.bidWinnerTeam && displayHand.bidWinnerPlayerIndex !== null && displayHand.trump && (
           <MeldPhase
             team1Meld={displayHand.team1Meld}
             team2Meld={displayHand.team2Meld}
@@ -119,7 +120,8 @@ const Index = () => {
             team2={team2}
             handNumber={getCurrentHandNumber()}
             bid={displayHand.bid}
-            bidWinner={displayHand.bidWinner}
+            bidWinnerTeam={displayHand.bidWinnerTeam}
+            bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
             trump={displayHand.trump}
             onTeam1MeldChange={(value) =>
               updateCurrentHand({ team1Meld: value })
@@ -130,7 +132,7 @@ const Index = () => {
           />
         )}
 
-        {phase === "tricks" && displayHand.bidWinner && displayHand.trump && (
+        {phase === "tricks" && displayHand.bidWinnerTeam && displayHand.bidWinnerPlayerIndex !== null && displayHand.trump && (
           <TricksPhase
             team1Tricks={displayHand.team1Tricks}
             team2Tricks={displayHand.team2Tricks}
@@ -138,7 +140,8 @@ const Index = () => {
             team2={team2}
             handNumber={getCurrentHandNumber()}
             bid={displayHand.bid}
-            bidWinner={displayHand.bidWinner}
+            bidWinnerTeam={displayHand.bidWinnerTeam}
+            bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
             trump={displayHand.trump}
             onTeam1TricksChange={updateTeam1Tricks}
           />

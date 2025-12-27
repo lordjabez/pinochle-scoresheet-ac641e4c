@@ -9,7 +9,8 @@ interface TricksPhaseProps {
   team2: Team;
   handNumber: number;
   bid: number;
-  bidWinner: string;
+  bidWinnerTeam: "team1" | "team2";
+  bidWinnerPlayerIndex: 0 | 1;
   trump: "hearts" | "diamonds" | "clubs" | "spades";
   onTeam1TricksChange: (value: number) => void;
 }
@@ -21,7 +22,8 @@ export const TricksPhase = ({
   team2,
   handNumber,
   bid,
-  bidWinner,
+  bidWinnerTeam,
+  bidWinnerPlayerIndex,
   trump,
   onTeam1TricksChange,
 }: TricksPhaseProps) => {
@@ -36,8 +38,11 @@ export const TricksPhase = ({
         handNumber={handNumber}
         phase="Tricks"
         bid={bid}
-        bidWinner={bidWinner}
+        bidWinnerTeam={bidWinnerTeam}
+        bidWinnerPlayerIndex={bidWinnerPlayerIndex}
         trump={trump}
+        team1={team1}
+        team2={team2}
       />
       
       <div className="grid grid-cols-2 gap-8 w-full max-w-md">
