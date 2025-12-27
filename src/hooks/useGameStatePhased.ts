@@ -21,11 +21,6 @@ interface GameState {
   hands: Hand[];
 }
 
-interface NavigationPosition {
-  handIndex: number; // -1 = new hand, 0+ = viewing historical hand
-  phase: GamePhase;
-}
-
 const defaultTeam1: Team = { name: "Team 1", score: 0, hands: [] };
 const defaultTeam2: Team = { name: "Team 2", score: 0, hands: [] };
 
@@ -44,15 +39,12 @@ export const useGameStatePhased = () => {
   const [team2, setTeam2] = useState<Team>(defaultTeam2);
   const [hands, setHands] = useState<Hand[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  
-  // Current hand being entered
+
+  // Current hand being entered/edited
   const [currentHand, setCurrentHand] = useState<HandInProgress>(defaultHandInProgress);
-  
-  // Navigation position
-  const [position, setPosition] = useState<NavigationPosition>({
-    handIndex: -1, // -1 means we're entering a new hand
-    phase: "bidding",
-  });
+
+  // Current phase
+  const [phase, setPhase] = useState<GamePhase>("bidding");
 
   // Load state from localStorage on mount
   useEffect(() => {
@@ -93,16 +85,17 @@ export const useGameStatePhased = () => {
     setTeam2(defaultTeam2);
     setHands([]);
     setCurrentHand(defaultHandInProgress);
-    setPosition({ handIndex: -1, phase: "bidding" });
+    setPhase("bidding");
     localStorage.removeItem(STORAGE_KEY);
   }, []);
 
   // Check if bid is impossible (meld can't reach bid even with max tricks)
   const isBidImpossible = useCallback(() => {
     if (currentHand.bidWinner === null) return false;
-    const bidderMeld = currentHand.bidWinner === "team1" 
-      ? currentHand.team1Meld 
-      : currentHand.team2Meld;
+    const bidderMeld =
+      currentHand.bidWinner === "team1"
+        ? currentHand.team1Meld
+        : currentHand.team2Meld;
     return currentHand.bid - bidderMeld > 25;
   }, [currentHand]);
 
@@ -114,11 +107,6 @@ export const useGameStatePhased = () => {
       currentHand.trump !== null
     );
   }, [currentHand]);
-
-  const isMeldValid = useCallback(() => {
-    // Meld can be 0 for both teams, that's valid
-    return true;
-  }, []);
 
   const isTricksValid = useCallback(() => {
     return currentHand.team1Tricks + currentHand.team2Tricks === 25;
@@ -144,16 +132,25 @@ export const useGameStatePhased = () => {
     }
 
     // Calculate scores
-    const team1Effective = hand.team1Tricks === 0 ? 0 : hand.team1Meld + hand.team1Tricks;
-    const team2Effective = hand.team2Tricks === 0 ? 0 : hand.team2Meld + hand.team2Tricks;
+    const team1Effective =
+      hand.team1Tricks === 0 ? 0 : hand.team1Meld + hand.team1Tricks;
+    const team2Effective =
+      hand.team2Tricks === 0 ? 0 : hand.team2Meld + hand.team2Tricks;
 
-    const biddingTeamPoints = hand.bidWinner === "team1" ? team1Effective : team2Effective;
-    const team1HandScore = hand.bidWinner === "team1"
-      ? (biddingTeamPoints >= hand.bid ? team1Effective : -hand.bid)
-      : team1Effective;
-    const team2HandScore = hand.bidWinner === "team2"
-      ? (biddingTeamPoints >= hand.bid ? team2Effective : -hand.bid)
-      : team2Effective;
+    const biddingTeamPoints =
+      hand.bidWinner === "team1" ? team1Effective : team2Effective;
+    const team1HandScore =
+      hand.bidWinner === "team1"
+        ? biddingTeamPoints >= hand.bid
+          ? team1Effective
+          : -hand.bid
+        : team1Effective;
+    const team2HandScore =
+      hand.bidWinner === "team2"
+        ? biddingTeamPoints >= hand.bid
+          ? team2Effective
+          : -hand.bid
+        : team2Effective;
 
     setHands((prev) => [...prev, hand]);
     setTeam1((prev) => ({
@@ -169,173 +166,118 @@ export const useGameStatePhased = () => {
 
     // Reset for next hand
     setCurrentHand(defaultHandInProgress);
-    setPosition({ handIndex: -1, phase: "bidding" });
+    setPhase("bidding");
   }, [currentHand, isBidImpossible]);
+
+  // Undo the last completed hand and load it for editing at a specific phase
+  const undoLastHand = useCallback(
+    (targetPhase: GamePhase) => {
+      if (hands.length === 0) return;
+
+      const lastHand = hands[hands.length - 1];
+      const lastTeam1Score = team1.hands[team1.hands.length - 1];
+      const lastTeam2Score = team2.hands[team2.hands.length - 1];
+
+      // Load the hand data for editing
+      setCurrentHand({
+        bid: lastHand.bid,
+        bidWinner: lastHand.bidWinner,
+        trump: lastHand.trump,
+        team1Meld: lastHand.team1Meld,
+        team2Meld: lastHand.team2Meld,
+        team1Tricks: lastHand.team1Tricks,
+        team2Tricks: lastHand.team2Tricks,
+      });
+
+      // Remove the hand from history and adjust scores
+      setHands(hands.slice(0, -1));
+      setTeam1({
+        ...team1,
+        score: team1.score - lastTeam1Score,
+        hands: team1.hands.slice(0, -1),
+      });
+      setTeam2({
+        ...team2,
+        score: team2.score - lastTeam2Score,
+        hands: team2.hands.slice(0, -1),
+      });
+
+      setPhase(targetPhase);
+    },
+    [hands, team1, team2]
+  );
 
   // Navigate to next phase
   const goNext = useCallback(() => {
-    const { handIndex, phase } = position;
-
-    if (handIndex === -1) {
-      // We're entering a new hand
-      if (phase === "bidding" && isBiddingValid()) {
-        setPosition({ handIndex: -1, phase: "meld" });
-      } else if (phase === "meld") {
-        // Check if bid is impossible - skip tricks phase
-        if (isBidImpossible()) {
-          commitHand();
-        } else {
-          setPosition({ handIndex: -1, phase: "tricks" });
-        }
-      } else if (phase === "tricks" && isTricksValid()) {
+    if (phase === "bidding" && isBiddingValid()) {
+      setPhase("meld");
+    } else if (phase === "meld") {
+      // Check if bid is impossible - skip tricks phase
+      if (isBidImpossible()) {
         commitHand();
+      } else {
+        setPhase("tricks");
       }
-    } else {
-      // We're viewing history - move forward
-      if (phase === "bidding") {
-        setPosition({ handIndex, phase: "meld" });
-      } else if (phase === "meld") {
-        // Check if this historical hand had impossible bid
-        const historicalHand = hands[handIndex];
-        const bidderMeld = historicalHand.bidWinner === "team1" 
-          ? historicalHand.team1Meld 
-          : historicalHand.team2Meld;
-        const wasImpossible = historicalHand.bid - bidderMeld > 25;
-        
-        if (wasImpossible) {
-          // Skip to next hand or current entry
-          if (handIndex < hands.length - 1) {
-            setPosition({ handIndex: handIndex + 1, phase: "bidding" });
-          } else {
-            setPosition({ handIndex: -1, phase: "bidding" });
-          }
-        } else {
-          setPosition({ handIndex, phase: "tricks" });
-        }
-      } else if (phase === "tricks") {
-        // Move to next hand or current entry
-        if (handIndex < hands.length - 1) {
-          setPosition({ handIndex: handIndex + 1, phase: "bidding" });
-        } else {
-          setPosition({ handIndex: -1, phase: "bidding" });
-        }
-      }
+    } else if (phase === "tricks" && isTricksValid()) {
+      commitHand();
     }
-  }, [position, hands, isBiddingValid, isMeldValid, isTricksValid, isBidImpossible, commitHand]);
+  }, [phase, isBiddingValid, isTricksValid, isBidImpossible, commitHand]);
 
-  // Navigate to previous phase
+  // Navigate to previous phase (with editing capability)
   const goBack = useCallback(() => {
-    const { handIndex, phase } = position;
-
-    if (handIndex === -1) {
-      // We're entering a new hand
-      if (phase === "tricks") {
-        setPosition({ handIndex: -1, phase: "meld" });
-      } else if (phase === "meld") {
-        setPosition({ handIndex: -1, phase: "bidding" });
-      } else if (phase === "bidding" && hands.length > 0) {
-        // Go back to last completed hand's last phase
-        const lastHandIndex = hands.length - 1;
-        const lastHand = hands[lastHandIndex];
-        const bidderMeld = lastHand.bidWinner === "team1" 
-          ? lastHand.team1Meld 
+    if (phase === "tricks") {
+      setPhase("meld");
+    } else if (phase === "meld") {
+      setPhase("bidding");
+    } else if (phase === "bidding" && hands.length > 0) {
+      // Undo the last hand and go to its last phase for editing
+      const lastHand = hands[hands.length - 1];
+      const bidderMeld =
+        lastHand.bidWinner === "team1"
+          ? lastHand.team1Meld
           : lastHand.team2Meld;
-        const wasImpossible = lastHand.bid - bidderMeld > 25;
-        
-        setPosition({ 
-          handIndex: lastHandIndex, 
-          phase: wasImpossible ? "meld" : "tricks" 
-        });
-      }
-    } else {
-      // We're viewing history
-      if (phase === "tricks") {
-        setPosition({ handIndex, phase: "meld" });
-      } else if (phase === "meld") {
-        setPosition({ handIndex, phase: "bidding" });
-      } else if (phase === "bidding") {
-        if (handIndex > 0) {
-          // Go to previous hand's last phase
-          const prevHand = hands[handIndex - 1];
-          const bidderMeld = prevHand.bidWinner === "team1" 
-            ? prevHand.team1Meld 
-            : prevHand.team2Meld;
-          const wasImpossible = prevHand.bid - bidderMeld > 25;
-          
-          setPosition({ 
-            handIndex: handIndex - 1, 
-            phase: wasImpossible ? "meld" : "tricks" 
-          });
-        }
-        // If handIndex === 0 and phase === bidding, can't go back further
-      }
+      const wasImpossible = lastHand.bid - bidderMeld > 25;
+
+      undoLastHand(wasImpossible ? "meld" : "tricks");
     }
-  }, [position, hands]);
+  }, [phase, hands, undoLastHand]);
 
   // Can we go back?
-  const canGoBack = position.handIndex > 0 || 
-    (position.handIndex === 0 && position.phase !== "bidding") ||
-    (position.handIndex === -1 && (position.phase !== "bidding" || hands.length > 0));
+  const canGoBack = phase !== "bidding" || hands.length > 0;
 
   // Can we go next?
-  const canGoNext = position.handIndex === -1
-    ? (position.phase === "bidding" && isBiddingValid()) ||
-      (position.phase === "meld" && isMeldValid()) ||
-      (position.phase === "tricks" && isTricksValid())
-    : true; // Can always navigate forward through history
+  const canGoNext =
+    (phase === "bidding" && isBiddingValid()) ||
+    phase === "meld" || // Meld is always valid (can be 0)
+    (phase === "tricks" && isTricksValid());
 
-  // Get display data for current position
-  const getDisplayHand = useCallback((): HandInProgress => {
-    if (position.handIndex === -1) {
-      return currentHand;
-    }
-    const historicalHand = hands[position.handIndex];
-    return {
-      bid: historicalHand.bid,
-      bidWinner: historicalHand.bidWinner,
-      trump: historicalHand.trump,
-      team1Meld: historicalHand.team1Meld,
-      team2Meld: historicalHand.team2Meld,
-      team1Tricks: historicalHand.team1Tricks,
-      team2Tricks: historicalHand.team2Tricks,
-    };
-  }, [position, currentHand, hands]);
-
-  // Update current hand values (only works when entering new hand)
-  const updateCurrentHand = useCallback((updates: Partial<HandInProgress>) => {
-    if (position.handIndex === -1) {
+  // Update current hand values
+  const updateCurrentHand = useCallback(
+    (updates: Partial<HandInProgress>) => {
       setCurrentHand((prev) => ({ ...prev, ...updates }));
-    }
-  }, [position]);
+    },
+    []
+  );
 
   // Update team1 tricks with auto-balance
   const updateTeam1Tricks = useCallback((value: number) => {
-    if (position.handIndex === -1) {
-      setCurrentHand((prev) => ({
-        ...prev,
-        team1Tricks: value,
-        team2Tricks: 25 - value,
-      }));
-    }
-  }, [position]);
+    setCurrentHand((prev) => ({
+      ...prev,
+      team1Tricks: value,
+      team2Tricks: 25 - value,
+    }));
+  }, []);
 
   // Get next button label
   const getNextLabel = useCallback(() => {
-    if (position.handIndex !== -1) return "Next";
-    if (position.phase === "meld" && isBidImpossible()) return "Finish Hand";
-    if (position.phase === "tricks") return "Finish Hand";
+    if (phase === "meld" && isBidImpossible()) return "Finish Hand";
+    if (phase === "tricks") return "Finish Hand";
     return "Next";
-  }, [position, isBidImpossible]);
-
-  // Check if we're viewing history (read-only mode)
-  const isViewingHistory = position.handIndex !== -1;
+  }, [phase, isBidImpossible]);
 
   // Get current hand number for display
   const getCurrentHandNumber = () => {
-    if (position.handIndex === -1) {
-      return hands.length + 1;
-    }
-    return position.handIndex + 1;
+    return hands.length + 1;
   };
 
   return {
@@ -346,20 +288,19 @@ export const useGameStatePhased = () => {
     setTeam2,
     resetGame,
     isLoaded,
-    
+
     // Phase navigation
-    phase: position.phase,
+    phase,
     goNext,
     goBack,
     canGoNext,
     canGoBack,
     getNextLabel,
-    
+
     // Current hand data
-    displayHand: getDisplayHand(),
+    displayHand: currentHand,
     updateCurrentHand,
     updateTeam1Tricks,
-    isViewingHistory,
     getCurrentHandNumber,
     isBidImpossible,
   };
