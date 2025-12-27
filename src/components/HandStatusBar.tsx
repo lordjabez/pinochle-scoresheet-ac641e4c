@@ -40,31 +40,29 @@ export const HandStatusBar = ({
   const winnerName = getWinnerName();
   
   return (
-    <div className="flex items-center justify-center gap-4 py-2 px-3 bg-green-700 rounded-lg text-sm w-full h-10">
-      <span className="text-white font-medium">
-        Hand {handNumber} - {phase}
-      </span>
-      <span className="text-white/40">•</span>
-      <span className="text-white/70">
-        Bid <span className="text-white font-medium">{bid}</span>
-      </span>
-      {winnerName && (
-        <>
-          <span className="text-white/40">•</span>
-          <span className="text-white/70">
-            Winner <span className="text-white font-medium">{winnerName}</span>
-          </span>
-        </>
-      )}
-      {suit && (
-        <>
-          <span className="text-white/40">•</span>
-          <span className="text-white/70">Trump</span>
-          <span className={`text-lg ${suit.color} bg-white rounded w-6 inline-flex justify-center`}>
+    <div className="flex items-center justify-center py-2 px-3 bg-green-700 rounded-lg text-sm w-full h-10">
+      <div className="flex items-center w-[120px]">
+        <span className="text-white/70">Hand {handNumber}:</span>
+        <span className="text-white font-medium ml-1">{phase}</span>
+      </div>
+      <div className="flex items-center w-[80px]">
+        <span className="text-white/70">Bid:</span>
+        <span className="text-white font-medium ml-1">{bid}</span>
+      </div>
+      <div className="flex items-center w-[120px]">
+        <span className="text-white/70">Winner:</span>
+        <span className="text-white font-medium ml-1">{winnerName ?? "—"}</span>
+      </div>
+      <div className="flex items-center w-[80px]">
+        <span className="text-white/70">Trump:</span>
+        {suit ? (
+          <span className={`text-lg ${suit.color} bg-white rounded w-6 inline-flex justify-center ml-1`}>
             {suit.symbol}
           </span>
-        </>
-      )}
+        ) : (
+          <span className="text-white font-medium ml-1">—</span>
+        )}
+      </div>
     </div>
   );
 };
