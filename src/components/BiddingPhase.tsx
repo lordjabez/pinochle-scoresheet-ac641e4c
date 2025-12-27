@@ -54,14 +54,14 @@ export const BiddingPhase = ({
 
       {/* Bid Winner Selection */}
       <div className="flex flex-col items-center gap-2">
-        <span className="text-sm text-amber-400 font-medium">Bid Winner</span>
+        <span className="text-sm text-amber-400 font-medium">Winner</span>
         <div className="grid grid-cols-2 gap-2">
           {players.map((player) => (
             <Button
               key={`${player.team}-${player.name}`}
               type="button"
               onClick={() => onBidWinnerChange(player.name, player.team)}
-              className={`px-4 py-2 h-10 font-semibold transition-colors ${
+              className={`w-28 h-10 font-semibold transition-colors ${
                 bidWinner === player.name
                   ? "bg-amber-400 text-green-900 [@media(hover:hover)]:hover:bg-amber-500"
                   : "bg-green-700 text-white border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
