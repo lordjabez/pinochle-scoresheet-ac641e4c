@@ -1,5 +1,6 @@
 import { NumberStepper } from "@/components/NumberStepper";
 import { HandStatusBar } from "@/components/HandStatusBar";
+import { MeldGuide } from "@/components/MeldGuide";
 import { Team } from "@/types";
 
 interface MeldPhaseProps {
@@ -60,6 +61,8 @@ export const MeldPhase = ({
           label={`${team2.players[0]} & ${team2.players[1]}`}
         />
       </div>
+
+      <MeldGuide trump={trump} />
     </div>
   );
 };
