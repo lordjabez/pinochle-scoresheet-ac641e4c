@@ -96,26 +96,19 @@ const Index = () => {
       <div className="flex-1 px-3 pb-20">
         {/* Phase Content */}
         {phase === "bidding" && (
-          <>
-            {/* Hand indicator for bidding */}
-            <div className="text-center mb-2">
-              <span className="text-sm text-white/70">
-                Hand {getCurrentHandNumber()}
-              </span>
-            </div>
-            <BiddingPhase
-              bid={displayHand.bid}
-              bidWinner={displayHand.bidWinner}
-              trump={displayHand.trump}
-              team1={team1}
-              team2={team2}
-              onBidChange={(value) => updateCurrentHand({ bid: value })}
-              onBidWinnerChange={(playerName, team) =>
-                updateCurrentHand({ bidWinner: playerName, bidWinnerTeam: team })
-              }
-              onTrumpChange={(value) => updateCurrentHand({ trump: value })}
-            />
-          </>
+          <BiddingPhase
+            bid={displayHand.bid}
+            bidWinner={displayHand.bidWinner}
+            trump={displayHand.trump}
+            team1={team1}
+            team2={team2}
+            handNumber={getCurrentHandNumber()}
+            onBidChange={(value) => updateCurrentHand({ bid: value })}
+            onBidWinnerChange={(playerName, team) =>
+              updateCurrentHand({ bidWinner: playerName, bidWinnerTeam: team })
+            }
+            onTrumpChange={(value) => updateCurrentHand({ trump: value })}
+          />
         )}
 
         {phase === "meld" && displayHand.bidWinner && displayHand.trump && (

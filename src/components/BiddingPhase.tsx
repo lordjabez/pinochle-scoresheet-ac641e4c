@@ -1,4 +1,5 @@
 import { NumberStepper } from "@/components/NumberStepper";
+import { HandStatusBar } from "@/components/HandStatusBar";
 import { Button } from "@/components/ui/button";
 import { Team } from "@/types";
 
@@ -8,6 +9,7 @@ interface BiddingPhaseProps {
   trump: "hearts" | "diamonds" | "clubs" | "spades" | null;
   team1: Team;
   team2: Team;
+  handNumber: number;
   onBidChange: (value: number) => void;
   onBidWinnerChange: (playerName: string, team: "team1" | "team2") => void;
   onTrumpChange: (value: "hearts" | "diamonds" | "clubs" | "spades") => void;
@@ -26,6 +28,7 @@ export const BiddingPhase = ({
   trump,
   team1,
   team2,
+  handNumber,
   onBidChange,
   onBidWinnerChange,
   onTrumpChange,
@@ -39,7 +42,14 @@ export const BiddingPhase = ({
   ];
 
   return (
-    <div className="flex flex-col items-center gap-6 py-4">
+    <div className="flex flex-col items-center gap-4 py-4">
+      <HandStatusBar
+        handNumber={handNumber}
+        bid={bid}
+        bidWinner={bidWinner}
+        trump={trump}
+      />
+      
       <h2 className="text-xl font-bold text-amber-400">Bidding</h2>
       
       {/* Bid Value */}
@@ -85,7 +95,7 @@ export const BiddingPhase = ({
               className={`h-12 w-12 text-2xl font-bold transition-colors ${
                 trump === suit.value
                   ? "bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500"
-                  : "bg-green-700 border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
+                  : "bg-white [@media(hover:hover)]:hover:bg-gray-100"
               }`}
             >
               <span className={trump === suit.value ? "text-green-900" : suit.color}>
