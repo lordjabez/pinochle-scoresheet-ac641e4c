@@ -40,10 +40,6 @@ export const TricksPhase = ({
         trump={trump}
       />
       
-      <div className="text-sm text-white/70 text-center">
-        Total must equal 25
-      </div>
-      
       <div className="grid grid-cols-2 gap-8 w-full max-w-md">
         <NumberStepper
           value={team1Tricks}
