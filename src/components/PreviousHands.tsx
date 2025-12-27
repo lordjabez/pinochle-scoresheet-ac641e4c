@@ -20,13 +20,13 @@ export const PreviousHands = ({ hands, team1, team2 }: PreviousHandsProps) => {
           {hands.map((hand, index) => (
             <div key={index} className="grid grid-cols-2 gap-2 p-2 bg-green-700 rounded text-xs sm:text-sm">
               <div className="text-white">
-                <span className="text-amber-400 font-medium">{team1.name}:</span> {hand.team1Meld}m + {hand.team1Tricks}t
+                <span className="text-amber-400 font-medium">Team 1:</span> {hand.team1Meld}m + {hand.team1Tricks}t
               </div>
               <div className="text-white">
-                <span className="text-amber-400 font-medium">{team2.name}:</span> {hand.team2Meld}m + {hand.team2Tricks}t
+                <span className="text-amber-400 font-medium">Team 2:</span> {hand.team2Meld}m + {hand.team2Tricks}t
               </div>
               <div className="col-span-2 text-white/70 text-xs">
-                Bid {hand.bid} by {hand.bidWinner === "team1" ? team1.name : team2.name} • {hand.trump}
+                Bid {hand.bid} by {hand.bidWinner} • {hand.trump}
               </div>
             </div>
           ))}

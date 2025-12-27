@@ -36,10 +36,10 @@ export const TricksPhase = ({
           min={0}
           max={25}
           step={1}
-          label={team1.name}
+          label={`${team1.players[0]} & ${team1.players[1]}`}
         />
         <div className="flex flex-col items-center gap-1">
-          <span className="text-sm text-amber-400 font-medium">{team2.name}</span>
+          <span className="text-sm text-amber-400 font-medium">{team2.players[0]} & {team2.players[1]}</span>
           <div className="flex items-center justify-center h-10">
             <div className="text-3xl font-bold text-white min-w-[60px] text-center tabular-nums">
               {team2Tricks}
