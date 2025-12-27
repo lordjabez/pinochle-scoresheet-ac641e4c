@@ -92,12 +92,12 @@ export const useGameStatePhased = () => {
   }, [team1, team2, hands, isLoaded]);
 
   const resetGame = useCallback(() => {
-    setTeam1(defaultTeam1);
-    setTeam2(defaultTeam2);
+    // Preserve player names, reset scores and hands
+    setTeam1(prev => ({ ...prev, score: 0, hands: [] }));
+    setTeam2(prev => ({ ...prev, score: 0, hands: [] }));
     setHands([]);
     setCurrentHand(defaultHandInProgress);
     setPhase("bidding");
-    localStorage.removeItem(STORAGE_KEY);
   }, []);
 
   // Check if bid is impossible (meld can't reach bid even with max tricks)
