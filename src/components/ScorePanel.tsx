@@ -24,10 +24,10 @@ export const ScorePanel = ({
 }: ScorePanelProps) => {
   return (
     <div className="bg-green-800 border border-amber-400/20 rounded-lg p-3">
-      {/* Team scores - two column layout: names left, scores right */}
-      <div className="flex flex-col gap-3">
+      {/* Team scores with visual grouping */}
+      <div className="flex flex-col gap-2">
         {/* Team 1 */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4 bg-green-700/50 rounded-lg p-3 border-l-4 border-amber-400">
           <div className="flex flex-col gap-1 flex-1">
             <Input
               type="text"
@@ -44,13 +44,13 @@ export const ScorePanel = ({
               placeholder="Player 2"
             />
           </div>
-          <div className="text-3xl font-bold text-amber-400 min-w-[60px] text-right">
+          <div className="text-5xl font-bold text-amber-400 min-w-[80px] text-right tabular-nums">
             {team1.score}
           </div>
         </div>
 
         {/* Team 2 */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4 bg-green-700/50 rounded-lg p-3 border-l-4 border-white/50">
           <div className="flex flex-col gap-1 flex-1">
             <Input
               type="text"
@@ -67,7 +67,7 @@ export const ScorePanel = ({
               placeholder="Player 4"
             />
           </div>
-          <div className="text-3xl font-bold text-amber-400 min-w-[60px] text-right">
+          <div className="text-5xl font-bold text-white min-w-[80px] text-right tabular-nums">
             {team2.score}
           </div>
         </div>
