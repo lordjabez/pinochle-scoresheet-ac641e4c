@@ -54,14 +54,23 @@ export const useGameStatePhased = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        const migratedTeam1 = {
-          ...parsed.team1,
-          hands: parsed.team1.hands || parsed.team1.rounds || [],
+        
+        // Migrate from old 'name' format to new 'players' format
+        const migrateTeam = (team: any, defaultPlayers: [string, string]): Team => {
+          const players: [string, string] = team.players 
+            ? team.players 
+            : team.name 
+              ? [team.name, "Partner"] 
+              : defaultPlayers;
+          return {
+            players,
+            score: team.score || 0,
+            hands: team.hands || team.rounds || [],
+          };
         };
-        const migratedTeam2 = {
-          ...parsed.team2,
-          hands: parsed.team2.hands || parsed.team2.rounds || [],
-        };
+        
+        const migratedTeam1 = migrateTeam(parsed.team1, ["Player 1", "Player 2"]);
+        const migratedTeam2 = migrateTeam(parsed.team2, ["Player 3", "Player 4"]);
         const migratedHands = parsed.hands || parsed.rounds || [];
 
         setTeam1(migratedTeam1);
