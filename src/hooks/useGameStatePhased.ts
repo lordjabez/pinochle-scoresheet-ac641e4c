@@ -281,6 +281,15 @@ export const useGameStatePhased = () => {
     }));
   }, []);
 
+  // Update team2 tricks with auto-balance
+  const updateTeam2Tricks = useCallback((value: number) => {
+    setCurrentHand((prev) => ({
+      ...prev,
+      team2Tricks: value,
+      team1Tricks: 25 - value,
+    }));
+  }, []);
+
   // Get next button label
   const getNextLabel = useCallback(() => {
     if (phase === "meld" && isBidImpossible()) return "Finish Hand";
@@ -314,6 +323,7 @@ export const useGameStatePhased = () => {
     displayHand: currentHand,
     updateCurrentHand,
     updateTeam1Tricks,
+    updateTeam2Tricks,
     getCurrentHandNumber,
     isBidImpossible,
   };

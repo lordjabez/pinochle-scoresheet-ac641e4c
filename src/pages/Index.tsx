@@ -36,6 +36,7 @@ const Index = () => {
     displayHand,
     updateCurrentHand,
     updateTeam1Tricks,
+    updateTeam2Tricks,
     getCurrentHandNumber,
     isBidImpossible,
   } = useGameStatePhased();
@@ -144,6 +145,7 @@ const Index = () => {
             bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
             trump={displayHand.trump}
             onTeam1TricksChange={updateTeam1Tricks}
+            onTeam2TricksChange={updateTeam2Tricks}
           />
         )}
       </div>
