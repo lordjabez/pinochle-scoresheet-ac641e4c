@@ -1,4 +1,5 @@
 import { NumberStepper } from "@/components/NumberStepper";
+import { HandStatusBar } from "@/components/HandStatusBar";
 import { Team } from "@/types";
 
 interface TricksPhaseProps {
@@ -6,6 +7,10 @@ interface TricksPhaseProps {
   team2Tricks: number;
   team1: Team;
   team2: Team;
+  handNumber: number;
+  bid: number;
+  bidWinner: string;
+  trump: "hearts" | "diamonds" | "clubs" | "spades";
   onTeam1TricksChange: (value: number) => void;
 }
 
@@ -14,6 +19,10 @@ export const TricksPhase = ({
   team2Tricks,
   team1,
   team2,
+  handNumber,
+  bid,
+  bidWinner,
+  trump,
   onTeam1TricksChange,
 }: TricksPhaseProps) => {
   // Auto-balance: team2Tricks = 25 - team1Tricks
@@ -22,7 +31,14 @@ export const TricksPhase = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 py-4">
+    <div className="flex flex-col items-center gap-4 py-4">
+      <HandStatusBar
+        handNumber={handNumber}
+        bid={bid}
+        bidWinner={bidWinner}
+        trump={trump}
+      />
+      
       <h2 className="text-xl font-bold text-amber-400">Tricks</h2>
       
       <div className="text-sm text-white/70 text-center">
