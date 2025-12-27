@@ -40,20 +40,20 @@ export const HandStatusBar = ({
   const winnerName = getWinnerName();
   
   return (
-    <div className="flex flex-wrap items-center py-2 px-3 bg-green-700 rounded-lg text-sm w-full">
-      <div className="flex items-center justify-center w-1/2 sm:w-1/4 py-1">
-        <span className="text-white/70">Hand {handNumber}:</span>
-        <span className="text-white font-medium ml-1">{phase}</span>
+    <div className="flex items-center py-2 px-3 bg-green-700 rounded-lg text-sm w-full">
+      <div className="flex items-center justify-center w-1/4">
+        <span className="text-white/70">Hand:</span>
+        <span className="text-white font-medium ml-1">{handNumber}</span>
       </div>
-      <div className="flex items-center justify-center w-1/2 sm:w-1/4 py-1">
+      <div className="flex items-center justify-center w-1/4">
         <span className="text-white/70">Bid:</span>
         <span className="text-white font-medium ml-1">{bid}</span>
       </div>
-      <div className="flex items-center justify-center w-1/2 sm:w-1/4 py-1">
+      <div className="flex items-center justify-center w-1/4">
         <span className="text-white/70">Winner:</span>
         <span className="text-white font-medium ml-1">{winnerName ?? "—"}</span>
       </div>
-      <div className="flex items-center justify-center w-1/2 sm:w-1/4 py-1">
+      <div className="flex items-center justify-center w-1/4">
         <span className="text-white/70">Trump:</span>
         {suit ? (
           <span className={`text-lg ${suit.color} bg-white rounded w-6 inline-flex justify-center ml-1`}>
