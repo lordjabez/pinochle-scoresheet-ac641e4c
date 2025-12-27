@@ -26,25 +26,25 @@ export const ScorePanel = ({
     <div className="bg-green-800 border border-amber-400/20 rounded-lg p-3">
       {/* Team scores - two column layout: names left, scores right */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           <Input
             type="text"
             value={team1.name}
             onChange={(e) => onTeam1NameChange(e.target.value)}
-            className="text-sm font-semibold bg-green-700 border-green-600 text-white h-8 w-32"
+            className="text-sm font-semibold bg-green-700 border-green-600 text-white h-8 flex-1"
           />
-          <div className="text-2xl font-bold text-amber-400">
+          <div className="text-3xl font-bold text-amber-400">
             {team1.score}
           </div>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           <Input
             type="text"
             value={team2.name}
             onChange={(e) => onTeam2NameChange(e.target.value)}
-            className="text-sm font-semibold bg-green-700 border-green-600 text-white h-8 w-32"
+            className="text-sm font-semibold bg-green-700 border-green-600 text-white h-8 flex-1"
           />
-          <div className="text-2xl font-bold text-amber-400">
+          <div className="text-3xl font-bold text-amber-400">
             {team2.score}
           </div>
         </div>
