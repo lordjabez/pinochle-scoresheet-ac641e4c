@@ -38,8 +38,8 @@ export const BidControls = ({
           <SelectValue placeholder="Winner" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="team1">{team1.name}</SelectItem>
-          <SelectItem value="team2">{team2.name}</SelectItem>
+          <SelectItem value="team1">{team1.players[0]} & {team1.players[1]}</SelectItem>
+          <SelectItem value="team2">{team2.players[0]} & {team2.players[1]}</SelectItem>
         </SelectContent>
       </Select>
 

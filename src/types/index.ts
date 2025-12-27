@@ -1,6 +1,6 @@
 
 export interface Team {
-  name: string;
+  players: [string, string]; // Two player names per team
   score: number;
   hands: number[];
 }
@@ -11,6 +11,7 @@ export interface Hand {
   team2Meld: number;
   team2Tricks: number;
   bid: number;
-  bidWinner: "team1" | "team2";
+  bidWinner: string; // Player name who won the bid
+  bidWinnerTeam: "team1" | "team2"; // Which team the bid winner is on
   trump: "hearts" | "diamonds" | "clubs" | "spades";
 }

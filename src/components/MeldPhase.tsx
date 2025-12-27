@@ -29,7 +29,7 @@ export const MeldPhase = ({
           min={0}
           max={999}
           step={1}
-          label={team1.name}
+          label={`${team1.players[0]} & ${team1.players[1]}`}
         />
         <NumberStepper
           value={team2Meld}
@@ -37,7 +37,7 @@ export const MeldPhase = ({
           min={0}
           max={999}
           step={1}
-          label={team2.name}
+          label={`${team2.players[0]} & ${team2.players[1]}`}
         />
       </div>
     </div>

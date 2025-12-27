@@ -24,9 +24,10 @@ export const TeamScoreCard = ({
       <div className="flex items-center gap-2 mb-2">
         <Input
           type="text"
-          value={team.name}
-          onChange={(e) => onTeamChange({ ...team, name: e.target.value })}
+          value={`${team.players[0]} & ${team.players[1]}`}
+          onChange={() => {}} // Read-only display
           className="text-sm sm:text-base font-semibold bg-green-700 border-green-600 text-white h-8 flex-1"
+          readOnly
         />
         <div className="text-2xl sm:text-3xl font-bold text-amber-400 min-w-[60px] text-center">
           {team.score}

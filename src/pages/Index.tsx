@@ -87,8 +87,8 @@ const Index = () => {
           team1={team1}
           team2={team2}
           hands={hands}
-          onTeam1NameChange={(name) => setTeam1({ ...team1, name })}
-          onTeam2NameChange={(name) => setTeam2({ ...team2, name })}
+          onTeam1PlayersChange={(players) => setTeam1({ ...team1, players })}
+          onTeam2PlayersChange={(players) => setTeam2({ ...team2, players })}
         />
       </div>
 
@@ -115,8 +115,8 @@ const Index = () => {
             team1={team1}
             team2={team2}
             onBidChange={(value) => updateCurrentHand({ bid: value })}
-            onBidWinnerChange={(value) =>
-              updateCurrentHand({ bidWinner: value })
+            onBidWinnerChange={(playerName, team) =>
+              updateCurrentHand({ bidWinner: playerName, bidWinnerTeam: team })
             }
             onTrumpChange={(value) => updateCurrentHand({ trump: value })}
           />

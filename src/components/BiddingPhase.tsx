@@ -4,12 +4,12 @@ import { Team } from "@/types";
 
 interface BiddingPhaseProps {
   bid: number;
-  bidWinner: "team1" | "team2" | null;
+  bidWinner: string | null;
   trump: "hearts" | "diamonds" | "clubs" | "spades" | null;
   team1: Team;
   team2: Team;
   onBidChange: (value: number) => void;
-  onBidWinnerChange: (value: "team1" | "team2") => void;
+  onBidWinnerChange: (playerName: string, team: "team1" | "team2") => void;
   onTrumpChange: (value: "hearts" | "diamonds" | "clubs" | "spades") => void;
 }
 
@@ -30,6 +30,14 @@ export const BiddingPhase = ({
   onBidWinnerChange,
   onTrumpChange,
 }: BiddingPhaseProps) => {
+  // All 4 players for bid winner selection
+  const players = [
+    { name: team1.players[0], team: "team1" as const },
+    { name: team1.players[1], team: "team1" as const },
+    { name: team2.players[0], team: "team2" as const },
+    { name: team2.players[1], team: "team2" as const },
+  ];
+
   return (
     <div className="flex flex-col items-center gap-6 py-4">
       <h2 className="text-xl font-bold text-amber-400">Bidding</h2>
@@ -47,29 +55,21 @@ export const BiddingPhase = ({
       {/* Bid Winner Selection */}
       <div className="flex flex-col items-center gap-2">
         <span className="text-sm text-amber-400 font-medium">Bid Winner</span>
-        <div className="flex gap-2">
-          <Button
-            type="button"
-            onClick={() => onBidWinnerChange("team1")}
-            className={`px-4 py-2 h-10 font-semibold transition-colors ${
-              bidWinner === "team1"
-                ? "bg-amber-400 text-green-900 [@media(hover:hover)]:hover:bg-amber-500"
-                : "bg-green-700 text-white border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
-            }`}
-          >
-            {team1.name}
-          </Button>
-          <Button
-            type="button"
-            onClick={() => onBidWinnerChange("team2")}
-            className={`px-4 py-2 h-10 font-semibold transition-colors ${
-              bidWinner === "team2"
-                ? "bg-amber-400 text-green-900 [@media(hover:hover)]:hover:bg-amber-500"
-                : "bg-green-700 text-white border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
-            }`}
-          >
-            {team2.name}
-          </Button>
+        <div className="grid grid-cols-2 gap-2">
+          {players.map((player) => (
+            <Button
+              key={`${player.team}-${player.name}`}
+              type="button"
+              onClick={() => onBidWinnerChange(player.name, player.team)}
+              className={`px-4 py-2 h-10 font-semibold transition-colors ${
+                bidWinner === player.name
+                  ? "bg-amber-400 text-green-900 [@media(hover:hover)]:hover:bg-amber-500"
+                  : "bg-green-700 text-white border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
+              }`}
+            >
+              {player.name}
+            </Button>
+          ))}
         </div>
       </div>
 

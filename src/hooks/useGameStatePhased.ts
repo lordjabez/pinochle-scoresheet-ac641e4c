@@ -7,7 +7,8 @@ export type GamePhase = "bidding" | "meld" | "tricks";
 
 interface HandInProgress {
   bid: number;
-  bidWinner: "team1" | "team2" | null;
+  bidWinner: string | null; // Player name
+  bidWinnerTeam: "team1" | "team2" | null;
   trump: "hearts" | "diamonds" | "clubs" | "spades" | null;
   team1Meld: number;
   team2Meld: number;
@@ -21,12 +22,13 @@ interface GameState {
   hands: Hand[];
 }
 
-const defaultTeam1: Team = { name: "Team 1", score: 0, hands: [] };
-const defaultTeam2: Team = { name: "Team 2", score: 0, hands: [] };
+const defaultTeam1: Team = { players: ["Player 1", "Player 2"], score: 0, hands: [] };
+const defaultTeam2: Team = { players: ["Player 3", "Player 4"], score: 0, hands: [] };
 
 const defaultHandInProgress: HandInProgress = {
   bid: 15,
   bidWinner: null,
+  bidWinnerTeam: null,
   trump: null,
   team1Meld: 0,
   team2Meld: 0,
@@ -91,9 +93,9 @@ export const useGameStatePhased = () => {
 
   // Check if bid is impossible (meld can't reach bid even with max tricks)
   const isBidImpossible = useCallback(() => {
-    if (currentHand.bidWinner === null) return false;
+    if (currentHand.bidWinnerTeam === null) return false;
     const bidderMeld =
-      currentHand.bidWinner === "team1"
+      currentHand.bidWinnerTeam === "team1"
         ? currentHand.team1Meld
         : currentHand.team2Meld;
     return currentHand.bid - bidderMeld > 25;
@@ -104,6 +106,7 @@ export const useGameStatePhased = () => {
     return (
       currentHand.bid >= 15 &&
       currentHand.bidWinner !== null &&
+      currentHand.bidWinnerTeam !== null &&
       currentHand.trump !== null
     );
   }, [currentHand]);
@@ -121,6 +124,7 @@ export const useGameStatePhased = () => {
       team2Tricks: currentHand.team2Tricks,
       bid: currentHand.bid,
       bidWinner: currentHand.bidWinner!,
+      bidWinnerTeam: currentHand.bidWinnerTeam!,
       trump: currentHand.trump!,
     };
 
@@ -138,15 +142,15 @@ export const useGameStatePhased = () => {
       hand.team2Tricks === 0 ? 0 : hand.team2Meld + hand.team2Tricks;
 
     const biddingTeamPoints =
-      hand.bidWinner === "team1" ? team1Effective : team2Effective;
+      hand.bidWinnerTeam === "team1" ? team1Effective : team2Effective;
     const team1HandScore =
-      hand.bidWinner === "team1"
+      hand.bidWinnerTeam === "team1"
         ? biddingTeamPoints >= hand.bid
           ? team1Effective
           : -hand.bid
         : team1Effective;
     const team2HandScore =
-      hand.bidWinner === "team2"
+      hand.bidWinnerTeam === "team2"
         ? biddingTeamPoints >= hand.bid
           ? team2Effective
           : -hand.bid
@@ -182,6 +186,7 @@ export const useGameStatePhased = () => {
       setCurrentHand({
         bid: lastHand.bid,
         bidWinner: lastHand.bidWinner,
+        bidWinnerTeam: lastHand.bidWinnerTeam,
         trump: lastHand.trump,
         team1Meld: lastHand.team1Meld,
         team2Meld: lastHand.team2Meld,
@@ -233,7 +238,7 @@ export const useGameStatePhased = () => {
       // Undo the last hand and go to its last phase for editing
       const lastHand = hands[hands.length - 1];
       const bidderMeld =
-        lastHand.bidWinner === "team1"
+        lastHand.bidWinnerTeam === "team1"
           ? lastHand.team1Meld
           : lastHand.team2Meld;
       const wasImpossible = lastHand.bid - bidderMeld > 25;

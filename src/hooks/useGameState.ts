@@ -10,8 +10,8 @@ interface GameState {
 }
 
 const defaultState: GameState = {
-  team1: { name: "Team 1", score: 0, hands: [] },
-  team2: { name: "Team 2", score: 0, hands: [] },
+  team1: { players: ["Player 1", "Player 2"], score: 0, hands: [] },
+  team2: { players: ["Player 3", "Player 4"], score: 0, hands: [] },
   hands: [],
 };
 
