@@ -78,7 +78,7 @@ export const ScorePanel = ({
         <Accordion type="single" collapsible className="mt-3">
           <AccordionItem value="game-log" className="border-amber-400/20">
             <AccordionTrigger className="text-amber-400 text-sm py-2 hover:no-underline">
-              Game Log ({hands.length} hands)
+              Full Score ({hands.length} hands)
             </AccordionTrigger>
             <AccordionContent>
               <div className="pt-2 overflow-x-auto">
