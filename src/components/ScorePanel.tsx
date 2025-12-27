@@ -28,19 +28,19 @@ export const ScorePanel = ({
       <div className="flex flex-col gap-3">
         {/* Team 1 */}
         <div className="flex items-center justify-between gap-4">
-          <div className="flex flex-col gap-1 flex-1">
+          <div className="flex gap-2 flex-1">
             <Input
               type="text"
               value={team1.players[0]}
               onChange={(e) => onTeam1PlayersChange([e.target.value, team1.players[1]])}
-              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7"
+              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7 flex-1"
               placeholder="Player 1"
             />
             <Input
               type="text"
               value={team1.players[1]}
               onChange={(e) => onTeam1PlayersChange([team1.players[0], e.target.value])}
-              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7"
+              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7 flex-1"
               placeholder="Player 2"
             />
           </div>
@@ -51,19 +51,19 @@ export const ScorePanel = ({
 
         {/* Team 2 */}
         <div className="flex items-center justify-between gap-4">
-          <div className="flex flex-col gap-1 flex-1">
+          <div className="flex gap-2 flex-1">
             <Input
               type="text"
               value={team2.players[0]}
               onChange={(e) => onTeam2PlayersChange([e.target.value, team2.players[1]])}
-              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7"
+              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7 flex-1"
               placeholder="Player 3"
             />
             <Input
               type="text"
               value={team2.players[1]}
               onChange={(e) => onTeam2PlayersChange([team2.players[0], e.target.value])}
-              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7"
+              className="text-sm font-semibold bg-green-700 border-green-600 text-white h-7 flex-1"
               placeholder="Player 4"
             />
           </div>
