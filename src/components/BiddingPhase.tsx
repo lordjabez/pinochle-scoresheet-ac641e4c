@@ -92,13 +92,13 @@ export const BiddingPhase = ({
               key={suit.value}
               type="button"
               onClick={() => onTrumpChange(suit.value)}
-              className={`h-12 w-12 text-2xl font-bold transition-colors ${
+              className={`h-12 w-12 font-bold transition-colors ${
                 trump === suit.value
                   ? "bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500"
-                  : "bg-white [@media(hover:hover)]:hover:bg-gray-100"
+                  : "bg-green-700 border border-green-600 [@media(hover:hover)]:hover:bg-green-600"
               }`}
             >
-              <span className={trump === suit.value ? "text-green-900" : suit.color}>
+              <span className={`text-lg ${suit.color} bg-white rounded px-1`}>
                 {suit.symbol}
               </span>
             </Button>
