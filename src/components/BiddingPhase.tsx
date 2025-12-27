@@ -16,8 +16,8 @@ interface BiddingPhaseProps {
 const suits = [
   { value: "hearts" as const, symbol: "♥", color: "text-red-500" },
   { value: "diamonds" as const, symbol: "♦", color: "text-red-500" },
-  { value: "clubs" as const, symbol: "♣", color: "text-white" },
-  { value: "spades" as const, symbol: "♠", color: "text-white" },
+  { value: "clubs" as const, symbol: "♣", color: "text-black" },
+  { value: "spades" as const, symbol: "♠", color: "text-black" },
 ];
 
 export const BiddingPhase = ({
