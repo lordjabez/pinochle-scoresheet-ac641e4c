@@ -1,0 +1,52 @@
+import { NumberStepper } from "@/components/NumberStepper";
+import { Team } from "@/types";
+
+interface TricksPhaseProps {
+  team1Tricks: number;
+  team2Tricks: number;
+  team1: Team;
+  team2: Team;
+  onTeam1TricksChange: (value: number) => void;
+}
+
+export const TricksPhase = ({
+  team1Tricks,
+  team2Tricks,
+  team1,
+  team2,
+  onTeam1TricksChange,
+}: TricksPhaseProps) => {
+  // Auto-balance: team2Tricks = 25 - team1Tricks
+  const handleTeam1Change = (value: number) => {
+    onTeam1TricksChange(value);
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-6 py-4">
+      <h2 className="text-xl font-bold text-amber-400">Tricks</h2>
+      
+      <div className="text-sm text-white/70 text-center">
+        Total must equal 25
+      </div>
+      
+      <div className="grid grid-cols-2 gap-8 w-full max-w-md">
+        <NumberStepper
+          value={team1Tricks}
+          onChange={handleTeam1Change}
+          min={0}
+          max={25}
+          step={1}
+          label={team1.name}
+        />
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-sm text-amber-400 font-medium">{team2.name}</span>
+          <div className="flex items-center justify-center h-10">
+            <div className="text-3xl font-bold text-white min-w-[60px] text-center tabular-nums">
+              {team2Tricks}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
