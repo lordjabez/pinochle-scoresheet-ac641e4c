@@ -98,9 +98,9 @@ export const ScorePanel = ({
                         ? team1.players[hand.bidWinnerPlayerIndex] 
                         : team2.players[hand.bidWinnerPlayerIndex];
                       
-                      // Calculate running totals up to this hand
-                      const team1Total = hands.slice(0, index + 1).reduce((sum, h) => sum + h.team1Meld + h.team1Tricks, 0);
-                      const team2Total = hands.slice(0, index + 1).reduce((sum, h) => sum + h.team2Meld + h.team2Tricks, 0);
+                      // Calculate running totals using actual scored points from team.hands
+                      const team1Total = team1.hands.slice(0, index + 1).reduce((sum, score) => sum + score, 0);
+                      const team2Total = team2.hands.slice(0, index + 1).reduce((sum, score) => sum + score, 0);
                       
                       return (
                         <>
