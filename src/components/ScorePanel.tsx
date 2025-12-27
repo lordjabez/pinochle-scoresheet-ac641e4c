@@ -73,7 +73,7 @@ export const ScorePanel = ({
         </div>
       </div>
 
-      {/* Expandable game log */}
+      {/* Expandable game log - paper scoresheet style */}
       {hands.length > 0 && (
         <Accordion type="single" collapsible className="mt-3">
           <AccordionItem value="game-log" className="border-amber-400/20">
@@ -81,30 +81,53 @@ export const ScorePanel = ({
               Game Log ({hands.length} hands)
             </AccordionTrigger>
             <AccordionContent>
-              <div className="space-y-2 pt-2">
-                {hands.map((hand, index) => (
-                  <div
-                    key={index}
-                    className="grid grid-cols-2 gap-2 p-2 bg-green-700 rounded text-xs"
-                  >
-                    <div className="text-white">
-                      <span className="text-amber-400 font-medium">
-                        Team 1:
-                      </span>{" "}
-                      {hand.team1Meld}m + {hand.team1Tricks}t
-                    </div>
-                    <div className="text-white">
-                      <span className="text-amber-400 font-medium">
-                        Team 2:
-                      </span>{" "}
-                      {hand.team2Meld}m + {hand.team2Tricks}t
-                    </div>
-                    <div className="col-span-2 text-white/70 text-xs">
-                      Bid {hand.bid} by {hand.bidWinnerTeam === "team1" ? team1.players[hand.bidWinnerPlayerIndex] : team2.players[hand.bidWinnerPlayerIndex]} •{" "}
-                      {hand.trump}
-                    </div>
-                  </div>
-                ))}
+              <div className="pt-2 overflow-x-auto">
+                <table className="w-full text-xs text-white border-collapse">
+                  <thead>
+                    <tr className="border-b border-amber-400/30">
+                      <th className="text-left text-amber-400 font-medium py-1 px-1 w-12">Hand</th>
+                      <th className="text-center text-amber-400 font-medium py-1 px-1">{team1.players[0]} & {team1.players[1]}</th>
+                      <th className="text-center text-amber-400 font-medium py-1 px-1">{team2.players[0]} & {team2.players[1]}</th>
+                      <th className="text-left text-amber-400 font-medium py-1 px-1">Bid</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {hands.map((hand, index) => {
+                      const trumpIcon = hand.trump === "hearts" ? "♥" : hand.trump === "diamonds" ? "♦" : hand.trump === "clubs" ? "♣" : "♠";
+                      const bidWinner = hand.bidWinnerTeam === "team1" 
+                        ? team1.players[hand.bidWinnerPlayerIndex] 
+                        : team2.players[hand.bidWinnerPlayerIndex];
+                      
+                      // Calculate running totals up to this hand
+                      const team1Total = hands.slice(0, index + 1).reduce((sum, h) => sum + h.team1Meld + h.team1Tricks, 0);
+                      const team2Total = hands.slice(0, index + 1).reduce((sum, h) => sum + h.team2Meld + h.team2Tricks, 0);
+                      
+                      return (
+                        <>
+                          {/* Meld row */}
+                          <tr key={`${index}-meld`} className="border-b border-green-600/50">
+                            <td className="py-1 px-1 text-white/70" rowSpan={3}>{index + 1}</td>
+                            <td className="text-center py-1 px-1">{hand.team1Meld}</td>
+                            <td className="text-center py-1 px-1">{hand.team2Meld}</td>
+                            <td className="py-1 px-1 text-white/70">{hand.bid} {bidWinner} {trumpIcon}</td>
+                          </tr>
+                          {/* Tricks row */}
+                          <tr key={`${index}-tricks`} className="border-b border-green-600/50">
+                            <td className="text-center py-1 px-1">{hand.team1Tricks}</td>
+                            <td className="text-center py-1 px-1">{hand.team2Tricks}</td>
+                            <td className="py-1 px-1"></td>
+                          </tr>
+                          {/* Sum row */}
+                          <tr key={`${index}-sum`} className="border-b border-amber-400/30">
+                            <td className="text-center py-1 px-1 font-bold text-amber-400">{team1Total}</td>
+                            <td className="text-center py-1 px-1 font-bold text-amber-400">{team2Total}</td>
+                            <td className="py-1 px-1"></td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </AccordionContent>
           </AccordionItem>
