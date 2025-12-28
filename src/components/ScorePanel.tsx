@@ -44,7 +44,7 @@ export const ScorePanel = ({
               placeholder="Player 2"
             />
           </div>
-          <div className="text-3xl font-bold text-amber-400 min-w-[60px] text-right">
+          <div className="text-3xl font-bold text-amber-400 min-w-[48px] text-right">
             {team1.score}
           </div>
         </div>
@@ -67,7 +67,7 @@ export const ScorePanel = ({
               placeholder="Player 4"
             />
           </div>
-          <div className="text-3xl font-bold text-amber-400 min-w-[60px] text-right">
+          <div className="text-3xl font-bold text-amber-400 min-w-[48px] text-right">
             {team2.score}
           </div>
         </div>
