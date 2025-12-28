@@ -20,6 +20,8 @@ interface GameState {
   team1: Team;
   team2: Team;
   hands: Hand[];
+  phase?: GamePhase;
+  currentHand?: HandInProgress;
 }
 
 const defaultTeam1: Team = { players: ["Player 1", "Player 2"], score: 0, hands: [] };
@@ -76,6 +78,14 @@ export const useGameStatePhased = () => {
         setTeam1(migratedTeam1);
         setTeam2(migratedTeam2);
         setHands(migratedHands);
+        
+        // Restore phase and current hand if available
+        if (parsed.phase) {
+          setPhase(parsed.phase);
+        }
+        if (parsed.currentHand) {
+          setCurrentHand(parsed.currentHand);
+        }
       } catch (e) {
         console.error("Failed to parse saved game state:", e);
       }
@@ -86,10 +96,10 @@ export const useGameStatePhased = () => {
   // Save state to localStorage whenever it changes
   useEffect(() => {
     if (isLoaded) {
-      const state: GameState = { team1, team2, hands };
+      const state: GameState = { team1, team2, hands, phase, currentHand };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
-  }, [team1, team2, hands, isLoaded]);
+  }, [team1, team2, hands, phase, currentHand, isLoaded]);
 
   const resetGame = useCallback(() => {
     // Preserve player names, reset scores and hands
