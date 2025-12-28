@@ -52,7 +52,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-green-900 flex flex-col">
       {/* Header */}
-      <header className="p-3 flex items-center justify-between border-b border-amber-400/20">
+      <header className="sticky top-0 z-10 p-3 flex items-center justify-between border-b border-amber-400/20 bg-green-900">
         <h1 className="text-xl font-bold text-amber-400">Pinochle</h1>
         <AlertDialog>
           <AlertDialogTrigger asChild>
