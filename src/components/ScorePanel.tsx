@@ -46,32 +46,6 @@ export const ScorePanel = ({
 
   return (
     <div className="bg-green-800 border border-amber-400/20 rounded-lg p-3">
-      {/* Hand status row */}
-      <div className="flex items-center justify-between text-xs mb-3 pb-2 border-b border-amber-400/20">
-        <div className="flex items-center gap-1">
-          <span className="text-white/70">Hand</span>
-          <span className="text-white font-medium">{handNumber}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-white/70">Bid:</span>
-          <span className="text-white font-medium">{bid}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-white/70">Winner:</span>
-          <span className="text-white font-medium">{winnerName ?? "—"}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-white/70">Trump:</span>
-          {suit ? (
-            <span className={`text-sm ${suit.color} bg-white rounded w-5 inline-flex justify-center`}>
-              {suit.symbol}
-            </span>
-          ) : (
-            <span className="text-white font-medium">—</span>
-          )}
-        </div>
-      </div>
-
       {/* Team scores - two column layout: names left, scores right */}
       <div className="flex flex-col gap-3">
         {/* Team 1 */}
@@ -189,6 +163,32 @@ export const ScorePanel = ({
           </AccordionItem>
         </Accordion>
       )}
+
+      {/* Hand status row */}
+      <div className="flex items-center justify-between text-xs mt-3 pt-2 border-t border-amber-400/20">
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Hand</span>
+          <span className="text-white font-medium">{handNumber}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Bid:</span>
+          <span className="text-white font-medium">{bid}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Winner:</span>
+          <span className="text-white font-medium">{winnerName ?? "—"}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Trump:</span>
+          {suit ? (
+            <span className={`text-sm ${suit.color} bg-white rounded w-5 inline-flex justify-center`}>
+              {suit.symbol}
+            </span>
+          ) : (
+            <span className="text-white font-medium">—</span>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
