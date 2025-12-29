@@ -22,7 +22,7 @@ export const PhaseNavigation = ({
         type="button"
         onClick={onBack}
         disabled={!canGoBack}
-        className="flex-1 h-12 bg-green-700 [@media(hover:hover)]:hover:bg-green-600 focus:bg-green-700 active:bg-green-700 text-white border border-green-600 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex-1 h-10 bg-green-700 [@media(hover:hover)]:hover:bg-green-600 focus:bg-green-700 active:bg-green-700 text-white border border-green-600 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <ChevronLeft size={20} className="mr-1" />
         Back
@@ -31,7 +31,7 @@ export const PhaseNavigation = ({
         type="button"
         onClick={onNext}
         disabled={!canGoNext}
-        className="flex-1 h-12 bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-400 text-green-900 font-semibold disabled:bg-amber-400/50 disabled:text-green-900/50 disabled:cursor-not-allowed disabled:opacity-100"
+        className="flex-1 h-10 bg-amber-400 [@media(hover:hover)]:hover:bg-amber-500 focus:bg-amber-400 active:bg-amber-400 text-green-900 font-semibold disabled:bg-amber-400/50 disabled:text-green-900/50 disabled:cursor-not-allowed disabled:opacity-100"
       >
         {nextLabel}
         <ChevronRight size={20} className="ml-1" />
