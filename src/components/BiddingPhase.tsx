@@ -1,5 +1,4 @@
 import { NumberStepper } from "@/components/NumberStepper";
-import { HandStatusBar } from "@/components/HandStatusBar";
 import { Button } from "@/components/ui/button";
 import { Team } from "@/types";
 
@@ -30,7 +29,6 @@ export const BiddingPhase = ({
   trump,
   team1,
   team2,
-  handNumber,
   onBidChange,
   onBidWinnerChange,
   onTrumpChange,
@@ -49,17 +47,6 @@ export const BiddingPhase = ({
 
   return (
     <div className="flex flex-col items-center gap-4 py-4">
-      <HandStatusBar
-        handNumber={handNumber}
-        phase="Bidding"
-        bid={bid}
-        bidWinnerTeam={bidWinnerTeam}
-        bidWinnerPlayerIndex={bidWinnerPlayerIndex}
-        trump={trump}
-        team1={team1}
-        team2={team2}
-      />
-      
       {/* Bid Value */}
       <NumberStepper
         value={bid}

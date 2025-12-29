@@ -1,5 +1,4 @@
 import { NumberStepper } from "@/components/NumberStepper";
-import { HandStatusBar } from "@/components/HandStatusBar";
 import { Team } from "@/types";
 
 interface TricksPhaseProps {
@@ -7,11 +6,6 @@ interface TricksPhaseProps {
   team2Tricks: number;
   team1: Team;
   team2: Team;
-  handNumber: number;
-  bid: number;
-  bidWinnerTeam: "team1" | "team2";
-  bidWinnerPlayerIndex: 0 | 1;
-  trump: "hearts" | "diamonds" | "clubs" | "spades";
   onTeam1TricksChange: (value: number) => void;
   onTeam2TricksChange: (value: number) => void;
 }
@@ -21,27 +15,11 @@ export const TricksPhase = ({
   team2Tricks,
   team1,
   team2,
-  handNumber,
-  bid,
-  bidWinnerTeam,
-  bidWinnerPlayerIndex,
-  trump,
   onTeam1TricksChange,
   onTeam2TricksChange,
 }: TricksPhaseProps) => {
   return (
     <div className="flex flex-col items-center gap-4 py-4">
-      <HandStatusBar
-        handNumber={handNumber}
-        phase="Tricks"
-        bid={bid}
-        bidWinnerTeam={bidWinnerTeam}
-        bidWinnerPlayerIndex={bidWinnerPlayerIndex}
-        trump={trump}
-        team1={team1}
-        team2={team2}
-      />
-      
       <div className="grid grid-cols-2 gap-8 w-full max-w-md">
         <NumberStepper
           value={team1Tricks}
