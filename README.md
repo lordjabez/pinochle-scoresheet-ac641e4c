@@ -84,3 +84,6 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-trick
 - [ ] Make trick points up/down arrows for selection vs point entry (goal is keyboard only needed for team names)
 - [ ] Get all the button colors right for all states
 - [ ] Add button to share final score screenshot to social media
+- [ ] Fix the app icon to be better and have more sizes
+- [ ] Add more app metadata
+- [ ] Check with PageSpeed and WAVE and fix things
