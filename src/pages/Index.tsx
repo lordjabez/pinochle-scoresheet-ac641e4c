@@ -88,6 +88,11 @@ const Index = () => {
           team1={team1}
           team2={team2}
           hands={hands}
+          handNumber={getCurrentHandNumber()}
+          bid={displayHand.bid}
+          bidWinnerTeam={displayHand.bidWinnerTeam}
+          bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
+          trump={displayHand.trump}
           onTeam1PlayersChange={(players) => setTeam1({ ...team1, players })}
           onTeam2PlayersChange={(players) => setTeam2({ ...team2, players })}
         />
@@ -119,10 +124,6 @@ const Index = () => {
             team2Meld={displayHand.team2Meld}
             team1={team1}
             team2={team2}
-            handNumber={getCurrentHandNumber()}
-            bid={displayHand.bid}
-            bidWinnerTeam={displayHand.bidWinnerTeam}
-            bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
             trump={displayHand.trump}
             onTeam1MeldChange={(value) =>
               updateCurrentHand({ team1Meld: value })
@@ -139,11 +140,6 @@ const Index = () => {
             team2Tricks={displayHand.team2Tricks}
             team1={team1}
             team2={team2}
-            handNumber={getCurrentHandNumber()}
-            bid={displayHand.bid}
-            bidWinnerTeam={displayHand.bidWinnerTeam}
-            bidWinnerPlayerIndex={displayHand.bidWinnerPlayerIndex}
-            trump={displayHand.trump}
             onTeam1TricksChange={updateTeam1Tricks}
             onTeam2TricksChange={updateTeam2Tricks}
           />

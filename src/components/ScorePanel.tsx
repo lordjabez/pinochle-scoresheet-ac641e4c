@@ -11,19 +11,67 @@ interface ScorePanelProps {
   team1: Team;
   team2: Team;
   hands: Hand[];
+  handNumber: number;
+  bid: number;
+  bidWinnerTeam: "team1" | "team2" | null;
+  bidWinnerPlayerIndex: 0 | 1 | null;
+  trump: "hearts" | "diamonds" | "clubs" | "spades" | null;
   onTeam1PlayersChange: (players: [string, string]) => void;
   onTeam2PlayersChange: (players: [string, string]) => void;
 }
+
+const suitSymbols = {
+  spades: { symbol: "♠", color: "text-black" },
+  diamonds: { symbol: "♦", color: "text-red-500" },
+  clubs: { symbol: "♣", color: "text-black" },
+  hearts: { symbol: "♥", color: "text-red-500" },
+};
 
 export const ScorePanel = ({
   team1,
   team2,
   hands,
+  handNumber,
+  bid,
+  bidWinnerTeam,
+  bidWinnerPlayerIndex,
+  trump,
   onTeam1PlayersChange,
   onTeam2PlayersChange,
 }: ScorePanelProps) => {
+  const suit = trump ? suitSymbols[trump] : null;
+  const winnerName = bidWinnerTeam !== null && bidWinnerPlayerIndex !== null
+    ? (bidWinnerTeam === "team1" ? team1 : team2).players[bidWinnerPlayerIndex]
+    : null;
+
   return (
     <div className="bg-green-800 border border-amber-400/20 rounded-lg p-3">
+      {/* Hand status row */}
+      <div className="flex items-center justify-between text-xs mb-3 pb-2 border-b border-amber-400/20">
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Hand</span>
+          <span className="text-white font-medium">{handNumber}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Bid:</span>
+          <span className="text-white font-medium">{bid}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Winner:</span>
+          <span className="text-white font-medium">{winnerName ?? "—"}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-white/70">Trump:</span>
+          {suit ? (
+            <span className={`text-sm ${suit.color} bg-white rounded w-5 inline-flex justify-center`}>
+              {suit.symbol}
+            </span>
+          ) : (
+            <span className="text-white font-medium">—</span>
+          )}
+        </div>
+      </div>
+
       {/* Team scores - two column layout: names left, scores right */}
       <div className="flex flex-col gap-3">
         {/* Team 1 */}
