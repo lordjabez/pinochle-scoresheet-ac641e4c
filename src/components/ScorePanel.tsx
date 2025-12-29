@@ -135,8 +135,12 @@ export const ScorePanel = ({
                     <tr className="border-b border-amber-400/30">
                       <th className="text-left text-amber-400 font-medium py-1 px-1 w-12">Hand</th>
                       <th className="text-left text-amber-400 font-medium py-1 px-1 w-12"></th>
-                      <th className="text-center text-amber-400 font-medium py-1 px-1">{team1.players[0]} & {team1.players[1]}</th>
-                      <th className="text-center text-amber-400 font-medium py-1 px-1">{team2.players[0]} & {team2.players[1]}</th>
+                      <th className="text-center text-amber-400 font-medium py-1 px-1">
+                        <div className="flex flex-col leading-tight">{team1.players[0]}<span>{team1.players[1]}</span></div>
+                      </th>
+                      <th className="text-center text-amber-400 font-medium py-1 px-1">
+                        <div className="flex flex-col leading-tight">{team2.players[0]}<span>{team2.players[1]}</span></div>
+                      </th>
                       <th className="text-left text-amber-400 font-medium py-1 px-1">Bid</th>
                     </tr>
                   </thead>
