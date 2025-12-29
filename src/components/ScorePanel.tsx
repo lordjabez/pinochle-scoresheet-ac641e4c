@@ -134,6 +134,7 @@ export const ScorePanel = ({
                   <thead>
                     <tr className="border-b border-amber-400/30">
                       <th className="text-left text-amber-400 font-medium py-1 px-1 w-12">Hand</th>
+                      <th className="text-left text-amber-400 font-medium py-1 px-1 w-12"></th>
                       <th className="text-center text-amber-400 font-medium py-1 px-1">{team1.players[0]} & {team1.players[1]}</th>
                       <th className="text-center text-amber-400 font-medium py-1 px-1">{team2.players[0]} & {team2.players[1]}</th>
                       <th className="text-left text-amber-400 font-medium py-1 px-1">Bid</th>
@@ -155,18 +156,21 @@ export const ScorePanel = ({
                           {/* Meld row */}
                           <tr key={`${index}-meld`} className="border-b border-green-600/50">
                             <td className="py-1 px-1 text-white/70" rowSpan={3}>{index + 1}</td>
+                            <td className="py-1 px-1 text-white/50 text-right">Meld</td>
                             <td className="text-center py-1 px-1">{hand.team1Meld}</td>
                             <td className="text-center py-1 px-1">{hand.team2Meld}</td>
                             <td className="py-1 px-1 text-white/70">{hand.bid} {bidWinner} {trumpIcon}</td>
                           </tr>
                           {/* Tricks row */}
                           <tr key={`${index}-tricks`} className="border-b border-green-600/50">
+                            <td className="py-1 px-1 text-white/50 text-right">Tricks</td>
                             <td className="text-center py-1 px-1">{hand.team1Tricks}</td>
                             <td className="text-center py-1 px-1">{hand.team2Tricks}</td>
                             <td className="py-1 px-1"></td>
                           </tr>
                           {/* Sum row */}
                           <tr key={`${index}-sum`} className="border-b border-amber-400/30">
+                            <td className="py-1 px-1 text-white/50 text-right">Total</td>
                             <td className="text-center py-1 px-1 font-bold text-amber-400">{team1Total}</td>
                             <td className="text-center py-1 px-1 font-bold text-amber-400">{team2Total}</td>
                             <td className="py-1 px-1"></td>
