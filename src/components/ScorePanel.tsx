@@ -98,7 +98,7 @@ export const ScorePanel = ({
       {/* Expandable game log - paper scoresheet style */}
       {hands.length > 0 && (
         <Accordion type="single" collapsible className="mt-3">
-          <AccordionItem value="game-log" className="border-amber-400/20">
+          <AccordionItem value="game-log" className="border-b-0">
             <AccordionTrigger className="text-amber-400 text-sm py-2 hover:no-underline">
               Full Score ({hands.length} hands)
             </AccordionTrigger>
