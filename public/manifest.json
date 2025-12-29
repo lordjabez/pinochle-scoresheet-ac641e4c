@@ -1,0 +1,18 @@
+{
+  "name": "Pinochle Scoresheet",
+  "short_name": "Pinochle",
+  "description": "Track your Pinochle card game scores with ease",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#15803d",
+  "theme_color": "#15803d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
